@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -18,7 +17,6 @@ import org.json.JSONObject;
 
 import android.net.ParseException;
 import android.util.Log;
-import android.widget.Toast;
 
 public class Helper {
 	
@@ -41,7 +39,7 @@ public class Helper {
 		     HttpClient httpclient = new DefaultHttpClient();
 
 		     //Why to use 10.0.2.2
-		     HttpPost httppost = new HttpPost("http://www.tutorapp.herobo.com/myFile.php");
+		     HttpPost httppost = new HttpPost("http://www.tutorapp.herobo.com/myFile.php"); //i
 		     httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 		     HttpResponse response = httpclient.execute(httppost);
 		     HttpEntity entity = response.getEntity();
@@ -73,10 +71,12 @@ public class Helper {
 			  data = "";
 		      for(int i=0;i<jArray.length();i++){
 		             json_data = jArray.getJSONObject(i);
-		             data +=json_data.getString("username") + json_data.getString("password") + json_data.getString("email") + json_data.getString("phone") + json_data.getString("name");//here "Name" is the column name in database
-		         }
-		      System.out.println(jArray.length());
-		      System.out.println(json_data.getString("password"));
+		             data +=json_data.getString("username") + json_data.getString("password") + json_data.getString("email") + json_data.getString("phone") + json_data.getString("name");//here "Name" is the column name in database //i
+  	          }
+		      //data+=(jArray.length());
+		      //data+=(json_data.getString("username")); //i
+		      //System.out.println(jArray.length());
+		      //System.out.println(json_data.getString("password")); //i
 		      }
 		      catch(JSONException e1){
 		       ;
@@ -86,5 +86,4 @@ public class Helper {
 		    }}).start();
 		
 	}
-
 }

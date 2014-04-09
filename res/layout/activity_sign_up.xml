@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FF8300"
+    android:orientation="vertical" >
+    
+  <EditText
+      android:id="@+id/etSignUpUsername"
+      android:layout_gravity="center"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:ems="10"
+      android:layout_marginTop="30dp"
+      android:background="#f0f0f0"
+      android:hint="Username"
+      android:inputType="textPersonName" >
+  </EditText>
+
+  <EditText
+      android:id="@+id/etSignUpPassword"
+      android:layout_gravity="center"
+      android:layout_width="wrap_content"
+            android:layout_marginTop="10dp"
+      android:background="#f0f0f0"
+      android:layout_height="wrap_content"
+      android:ems="10"
+      android:hint="Password"
+      android:inputType="textPassword" />
+  <EditText
+      android:id="@+id/etSignUpConfirmPassword"
+            android:layout_gravity="center"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+      android:background="#f0f0f0"
+      android:ems="10"
+      android:hint="Confirm Password"
+      android:inputType="textPassword" />
+  
+  <EditText
+      android:id="@+id/etSignUpEmail"
+            android:layout_gravity="center"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:ems="10"
+            android:layout_marginTop="10dp"
+      android:background="#f0f0f0"
+      android:hint="Email"
+      android:inputType="textPersonName" />
+
+  <EditText
+      android:id="@+id/etSignUpPhone"
+            android:layout_gravity="center"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:ems="10"
+            android:layout_marginTop="10dp"
+      android:background="#f0f0f0"
+      android:hint="Phone"
+      android:inputType="textPersonName" />
+
+  <EditText
+      android:id="@+id/etSignUpFullName"
+            android:layout_gravity="center"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:ems="10"
+            android:layout_marginTop="10dp"
+      android:background="#f0f0f0"
+      android:hint="Full name"
+      android:inputType="textPersonName" />
+
+  <Button
+      android:id="@+id/btnSignUpActivity"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:text="Sign up" />
+ 
+</LinearLayout>

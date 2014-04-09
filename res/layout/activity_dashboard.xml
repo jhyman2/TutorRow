@@ -2,30 +2,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FF8300"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:background="#FF8300"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".Dashboard" >
 
-    <fragment
-        android:id="@+id/fragment1"
-        android:name="android.app.ListFragment"
+                <TextView
+        android:id="@+id/tvDashAlertText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="51dp" />
-
-    <TextView
-        android:id="@+id/textView1"
+        android:layout_marginTop="50dp"
+        android:text="Recent Alerts"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+      
+    
+    <Button
+        android:id="@+id/button2"
+        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="36dp"
-        android:text="Alerts" />
+        android:layout_marginLeft="18dp"
+        android:layout_alignLeft="@+id/fragment1"
+        android:layout_alignParentBottom="true"
+        android:text="Tutor more classes" />
 
     <Button
         android:id="@+id/button3"
@@ -34,61 +35,58 @@
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/button2"
         android:layout_alignBottom="@+id/button2"
-        android:layout_alignRight="@+id/fragment1"
+        android:layout_toRightOf="@+id/button2"
         android:text="Get more tutoring" />
 
-    <Button
-        android:id="@+id/button2"
-        style="?android:attr/buttonStyleSmall"
+    
+    
+     <LinearLayout
+        android:id="@+id/fragDashAlerts"
+        android:layout_below="@id/tvDashAlertText"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/fragment1"
-        android:layout_alignParentBottom="true"
-        android:text="Tutor more classes" />
+        android:layout_height="100dp"
+        android:layout_weight="3"
+        android:paddingBottom="20dp"
+        />
 
-    <fragment
-        android:id="@+id/fragment2"
-        android:name="android.support.v4.app.ListFragment"
+     <LinearLayout
+        android:id="@+id/fragDashCoursesStudent"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/button3"
-        android:layout_alignLeft="@+id/button2"
-        android:layout_alignRight="@+id/button2"
-        android:layout_marginBottom="36dp" />
+        android:layout_below="@id/fragDashAlerts"
+        android:layout_height="100dp"
+        android:layout_weight="3"
+        android:paddingBottom="20dp"
+        />
 
-    <fragment
-        android:id="@+id/fragment3"
-        android:name="android.app.ListFragment"
+  <LinearLayout
+        android:id="@+id/fragDashCoursesTutor"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/fragment2"
-        android:layout_alignTop="@+id/fragment2"
-        android:layout_toRightOf="@+id/textView1" />
-
-    <Button
+        android:layout_below="@id/fragDashCoursesStudent"
+        android:layout_height="100dp"
+        android:layout_weight="3"
+        />
+ <!--   <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/fragment1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="31dp"
-        android:text="Sign up for more" />
-
-    <TextView
+        android:layout_above="@+id/fragClasses"
+        android:layout_alignLeft="@+id/textView2"
+        android:text="Sign up for more" />  -->
+      <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/fragment2"
-        android:layout_toLeftOf="@+id/textView1"
-        android:text="Classes you&apos;re tutoring for"
+        android:layout_above="@id/fragDashCoursesTutor"
+        android:text="Classes you&apos;re smart enough for:"
         android:textAppearance="?android:attr/textAppearanceMedium" />
+  
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/fragment3"
-        android:layout_alignLeft="@+id/fragment3"
+        android:layout_alignLeft="@+id/fragDashAlerts"
+        android:layout_above="@id/fragDashCoursesStudent"
         android:text="Classes you&apos;re signed up for"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
