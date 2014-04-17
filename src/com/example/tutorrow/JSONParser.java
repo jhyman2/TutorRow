@@ -16,6 +16,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
  
@@ -39,29 +40,32 @@ public class JSONParser {
  
         // Making HTTP request
         try {
- 
+            Log.d("JSON Parser", "1");
             // check for request method
             if(method.equalsIgnoreCase("POST")){
+                Log.d("JSON Parser", "2");
                 // request method is POST
                 // defaultHttpClient
                 DefaultHttpClient httpClient = new DefaultHttpClient();
                 HttpPost httpPost = new HttpPost(url);
                 httpPost.setEntity(new UrlEncodedFormEntity(params));
- 
+                Log.d("JSON Parser", "3");
                 HttpResponse httpResponse = httpClient.execute(httpPost);
                 HttpEntity httpEntity = httpResponse.getEntity();
                 is = httpEntity.getContent();
- 
+                Log.d("JSON Parser", "4");
             }else if(method.equalsIgnoreCase("GET")){
                 // request method is GET
+                Log.d("JSON Parser", "5");
                 DefaultHttpClient httpClient = new DefaultHttpClient();
                 String paramString = URLEncodedUtils.format(params, "utf-8");
                 url += "?" + paramString;
                 HttpGet httpGet = new HttpGet(url);
- 
+                Log.d("JSON Parser", "6");
                 HttpResponse httpResponse = httpClient.execute(httpGet);
                 HttpEntity httpEntity = httpResponse.getEntity();
                 is = httpEntity.getContent();
+                Log.d("JSON Parser", "7");
             }           
  
         } catch (UnsupportedEncodingException e) {
@@ -73,6 +77,7 @@ public class JSONParser {
         }
  
         try {
+            Log.d("JSON Parser", "8");
             BufferedReader reader = new BufferedReader(new InputStreamReader(
                     is, "iso-8859-1"), 8);
             StringBuilder sb = new StringBuilder();
@@ -82,12 +87,14 @@ public class JSONParser {
             }
             is.close();
             json = sb.toString();
+            Log.d("JSON Parser", "9");
         } catch (Exception e) {
             Log.e("Buffer Error", "Error converting result " + e.toString());
         }
  
         // try parse the string to a JSON object
         try {
+            Log.d("JSON Parser", "10");
             jObj = new JSONObject(json);
         } catch (JSONException e) {
             Log.e("JSON Parser", "Error parsing data " + e.toString());

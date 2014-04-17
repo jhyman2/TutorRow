@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import android.os.AsyncTask;
@@ -42,17 +43,23 @@ public class SignUpActivity extends Activity{
 			
 			@Override
 			public void onClick(View arg0) {
-				// TODO Auto-generated method stub
-				AsyncTask<String, String, String> s = new RegisterUser().execute();
+				// TODO Dynamically check password match (check box as you type)
 				
-				if (globalSuccess){
-					Toast.makeText(getApplicationContext(), "Account created sucesfully", Toast.LENGTH_LONG).show();
-					Log.d("global success", "ssss");
-					goToLogIn();
+				if (pass.getText().toString().equals(confirmPass.getText().toString())){
+					AsyncTask<String, String, String> s = new RegisterUser().execute();
+					
+					if (globalSuccess){
+						Toast.makeText(getApplicationContext(), "Account created sucesfully", Toast.LENGTH_LONG).show();
+						Log.d("global success", "ssss");
+						goToLogIn();
+					}else{
+						Log.d("global fail", "ssss");
+						Toast.makeText(getApplicationContext(), "Error: Account could not be created", Toast.LENGTH_LONG).show();
+						finish();
+					}
+					
 				}else{
-					Log.d("global fail", "ssss");
-					Toast.makeText(getApplicationContext(), "Error: Account could not be created", Toast.LENGTH_LONG).show();
-					finish();
+					Toast.makeText(getApplicationContext(), "Passwords do not match", Toast.LENGTH_LONG).show();
 				}
 			}
 		});
