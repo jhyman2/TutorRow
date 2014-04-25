@@ -26,7 +26,7 @@ public class MoreClassesSelectNumberFragment extends ListFragment{
 		    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
 		        android.R.layout.simple_list_item_1, values);
 		    setListAdapter(adapter);
-		return inflater.inflate(R.layout.activity_more_classes_major, container, false);
+		return inflater.inflate(R.layout.activity_more_classes_number, container, false);
 	}
 	
 	 @Override

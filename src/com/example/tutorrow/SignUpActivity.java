@@ -23,7 +23,8 @@ public class SignUpActivity extends Activity{
 	EditText username, pass, confirmPass, email, phone, fullName;
 	Button signUp;
 	JSONParser jsonParser = new JSONParser();
-	private static String signUpURL = "http://www.tutorapp.herobo.com/new_user.php";
+//	private static String signUpURL = "http://www.tutorapp.herobo.com/new_user.php";
+	private static String signUpURL = "http://www.tutorrow.com/tutorrow/new_user.php";
 	boolean globalSuccess = true;
 	
 	@Override

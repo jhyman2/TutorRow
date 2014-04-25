@@ -1,5 +1,7 @@
 package com.example.tutorrow;
 
+import java.io.Serializable;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.FragmentManager;
@@ -8,7 +10,7 @@ import android.view.Menu;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class MoreClasses extends Activity {
+public class MoreClasses extends Activity{
 
 	TextView tutorOrLearn;
 	Button confirmMajor, confirmNumber, confirmTutor;

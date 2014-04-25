@@ -1,8 +1,14 @@
 package com.example.tutorrow;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -20,70 +26,79 @@ import android.util.Log;
 
 public class Helper {
 	
-	public static String data = "";
-	
-	public void getData(){
-		new Thread(new Runnable() {
-		    public void run() {
-		JSONArray jArray = null;
-
-		String result = null;
-
-		StringBuilder sb = null;
-
-		InputStream is = null;
-
-		ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		//http post
-		try{
-		     HttpClient httpclient = new DefaultHttpClient();
-
-		     //Why to use 10.0.2.2
-		     HttpPost httppost = new HttpPost("http://www.tutorapp.herobo.com/myFile.php"); //i
-		     httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-		     HttpResponse response = httpclient.execute(httppost);
-		     HttpEntity entity = response.getEntity();
-		     is = entity.getContent();
-		     }catch(Exception e){
-		    	// data += "Error converting result "+e.toString();
-		         Log.e("log_tag", "Error in http connection"+e.toString());
-		    }
-		//convert response to string
-		try{
-		      BufferedReader reader = new BufferedReader(new InputStreamReader(is,"iso-8859-1"),8);
-		       sb = new StringBuilder();
-		       sb.append(reader.readLine() + "\n");
-
-		       String line="0";
-		       while ((line = reader.readLine()) != null) {
-		                      sb.append(line + "\n");
-		        }
-		        is.close();
-		        result=sb.toString();
-		        }catch(Exception e){
-    			//       data += "Error converting result "+e.toString();
-		              Log.e("log_tag", "Error converting result "+e.toString());
-		        }
+	public static User readUserFromFile(String filePath){
+		FileInputStream courseFile = null;
+		File file = null;
+		ObjectInputStream courseObj = null;
 
 		try{
-		      jArray = new JSONArray(result);
-		      JSONObject json_data=null;
-			  data = "";
-		      for(int i=0;i<jArray.length();i++){
-		             json_data = jArray.getJSONObject(i);
-		             data +=json_data.getString("username") + json_data.getString("password") + json_data.getString("email") + json_data.getString("phone") + json_data.getString("name");//here "Name" is the column name in database //i
-  	          }
-		      //data+=(jArray.length());
-		      //data+=(json_data.getString("username")); //i
-		      //System.out.println(jArray.length());
-		      //System.out.println(json_data.getString("password")); //i
-		      }
-		      catch(JSONException e1){
-		       ;
-		      } catch (ParseException e1) {
-		   e1.printStackTrace();
-		 }
-		    }}).start();
-		
+			file = new File(filePath);
+
+			if (!file.exists()) {
+				Log.d("noFile", "wtttttttf");
+				Log.d("filepath", filePath + "");
+				Log.d("fileee", file.exists() + "");
+				return null;
+			}
+			Log.d("file", "Exists?");
+			courseFile = new FileInputStream(filePath);
+			courseObj = new ObjectInputStream(courseFile);
+			User u = (User)courseObj.readObject();
+			courseObj.close();
+			return u;
+
+		}catch(Exception e){
+			Log.d("Read File", "Uh oh: " + e.getMessage());
+			return null;
+		}finally{
+			try {
+				courseObj.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				Log.d("IOException", e.getMessage());
+				return null;
+			}
+		}
 	}
+	
+	public static String writeToFile(User u, String filePath){
+		String s = "";
+		
+		FileOutputStream courseFile = null;
+		ObjectOutputStream courseObj = null;
+		File file = null;
+		try{
+//				String filePath = this.getFilesDir().getPath().toString() + userDataFile;
+				file = new File(filePath);
+				if (!file.exists()){
+					if (!file.createNewFile()) {
+						s += "File could not be created";
+					}
+				}
+				courseFile = new FileOutputStream(filePath);
+				courseObj = new ObjectOutputStream(courseFile);
+				
+		        if (courseObj != null && courseFile != null){
+					courseObj.writeObject(u);
+		        }else{
+		        	s += "There was an error with the file";
+		        }
+				
+			
+		}catch(Exception e){
+			s += e.toString();
+		}finally{
+			try {
+				courseObj.close();
+				courseFile.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				s += "closing error";
+			}
+		}
+		
+		return s + " finished writing.";
+	}
+	
 }
