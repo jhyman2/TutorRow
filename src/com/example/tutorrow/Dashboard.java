@@ -9,6 +9,9 @@ import java.util.ArrayList;
 
 import javax.xml.bind.annotation.XmlElementDecl.GLOBAL;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.annotation.SuppressLint;
@@ -38,36 +41,46 @@ public class Dashboard extends Activity implements OnClickListener {
 		super.onCreate(savedInstanceState);
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		setContentView(R.layout.activity_dashboard);
-		Log.d("pre-read", "before reading");
-		readFromFile();
-		Log.d("post-read", "post read");
-		Bundle extras = getIntent().getExtras();	
-		FragmentManager fm = getFragmentManager();
-		FragmentTransaction ft = fm.beginTransaction();
-		DashAlertFragment alertFragment = new DashAlertFragment();
-		DashCourseStudentListFragment studentCourses = new DashCourseStudentListFragment();
-		Bundle bundle = new Bundle();
-		DashCourseTutorListFragment tutorCourses = new DashCourseTutorListFragment();
-		ft.add(R.id.fragDashCoursesTutor, tutorCourses);
-		ft.add(R.id.fragDashCoursesStudent, studentCourses);
-		ft.add(R.id.fragDashAlerts, alertFragment);
-		ft.commit();
-		
-		/*String username = extras.getString("user");
-		
-		userNameText = (TextView)findViewById(R.id.tvDashboardUserTextName);
-		userNameText.setText("Welcome " + username + "!");*/
-		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-	    //  SharedPreferences.Editor editor = prefs.edit();
-		String storedPreference = prefs.getString("storedInt", "Not there");
-		userNameText = (TextView)findViewById(R.id.tvDashboardUserTextName);
-		Log.d("beforetext", "before text");
-		userNameText.setText("Welcome " + u.getName() + "!");
-		Log.d("aftertext", "after text");
-		tutorMore = (Button)findViewById(R.id.btnTutorMoreClasses);
-		learnMore = (Button)findViewById(R.id.btnGetMoreTutoring);
-		tutorMore.setOnClickListener(this);
-		learnMore.setOnClickListener(this);	
+			Log.d("pre-read", "before reading");
+			readFromFile();
+			Log.d("post-read", "post read");
+			Bundle extras = getIntent().getExtras();
+			FragmentManager fm = getFragmentManager();
+			FragmentTransaction ft = fm.beginTransaction();
+			DashAlertFragment alertFragment = new DashAlertFragment();
+			DashCourseStudentListFragment studentCourses = new DashCourseStudentListFragment();
+			Bundle bundle = new Bundle();
+			DashCourseTutorListFragment tutorCourses = new DashCourseTutorListFragment();
+			ft.add(R.id.fragDashCoursesTutor, tutorCourses);
+			ft.add(R.id.fragDashCoursesStudent, studentCourses);
+			ft.add(R.id.fragDashAlerts, alertFragment);
+			ft.commit();
+
+			/*
+			 * String username = extras.getString("user");
+			 * 
+			 * userNameText =
+			 * (TextView)findViewById(R.id.tvDashboardUserTextName);
+			 * userNameText.setText("Welcome " + username + "!");
+			 */
+			SharedPreferences prefs = PreferenceManager
+					.getDefaultSharedPreferences(this);
+			// SharedPreferences.Editor editor = prefs.edit();
+			String storedPreference = prefs.getString("storedInt", "Not there");
+			userNameText = (TextView) findViewById(R.id.tvDashboardUserTextName);
+			Log.d("beforetext", "before text");
+			userNameText.setText("Welcome " + u.getName() + "!");
+			Log.d("aftertext", "after text");
+			tutorMore = (Button) findViewById(R.id.btnTutorMoreClasses);
+			learnMore = (Button) findViewById(R.id.btnGetMoreTutoring);
+			tutorMore.setOnClickListener(this);
+			learnMore.setOnClickListener(this);
+	}
+	
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		super.onResume();
 	}
 
 	public User readFromFile(){

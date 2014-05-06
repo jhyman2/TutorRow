@@ -16,27 +16,6 @@
         android:layout_marginTop="50dp"
         android:text="Recent Alerts"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-      
-    
-    <Button
-        android:id="@+id/btnTutorMoreClasses"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="18dp"
-        android:layout_alignLeft="@+id/fragment1"
-        android:layout_alignParentBottom="true"
-        android:text="Tutor more classes" />
-
-    <Button
-        android:id="@+id/btnGetMoreTutoring"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/button2"
-        android:layout_alignBottom="@+id/button2"
-        android:layout_toRightOf="@+id/button2"
-        android:text="Get more tutoring" />
 
     
     
@@ -90,14 +69,35 @@
         android:text="Classes you&apos;re signed up for"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
+    <Button
+        android:id="@+id/btnGetMoreTutoring"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/btnTutorMoreClasses"
+        android:layout_alignBottom="@+id/btnTutorMoreClasses"
+        android:layout_toRightOf="@+id/btnTutorMoreClasses"
+        android:text="Get more tutoring" />
+
     <TextView
         android:id="@+id/tvDashboardUserTextName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/btnGetMoreTutoring"
-        android:layout_alignBottom="@+id/btnGetMoreTutoring"
-        android:layout_alignRight="@+id/textView2"
-        android:layout_marginRight="16dp"
-        android:text="TextView" />
+        android:layout_alignBottom="@+id/tvDashAlertText"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="32dp"
+        android:text="TextView"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        android:typeface="serif" />
+
+    <Button
+        android:id="@+id/btnTutorMoreClasses"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/fragDashCoursesTutor"
+        android:layout_alignParentBottom="true"
+        android:text="Tutor more classes" />
 
 </RelativeLayout>

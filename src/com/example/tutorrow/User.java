@@ -2,7 +2,6 @@ package com.example.tutorrow;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-
 import android.app.Application;
 
 public class User implements Serializable{
@@ -18,6 +17,7 @@ public class User implements Serializable{
 	private String username;
 	private ArrayList<SchoolClass> classesTutor = new ArrayList<SchoolClass>();
 	private ArrayList<SchoolClass> classesStudent = new ArrayList<SchoolClass>();
+	
 	
 	public User(String id, String fullName, String email, String phone, String username){
 		this.id = id;
