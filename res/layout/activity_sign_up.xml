@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FF8300"
+          android:background="@drawable/backrepeat"
     android:orientation="vertical" >
     
   <EditText
@@ -12,7 +12,6 @@
       android:layout_height="wrap_content"
       android:ems="10"
       android:layout_marginTop="30dp"
-      android:background="#f0f0f0"
       android:hint="Username"
       android:inputType="textPersonName" >
   </EditText>
@@ -22,7 +21,6 @@
       android:layout_gravity="center"
       android:layout_width="wrap_content"
             android:layout_marginTop="10dp"
-      android:background="#f0f0f0"
       android:layout_height="wrap_content"
       android:ems="10"
       android:hint="Password"
@@ -33,7 +31,6 @@
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-      android:background="#f0f0f0"
       android:ems="10"
       android:hint="Confirm Password"
       android:inputType="textPassword" />
@@ -45,7 +42,6 @@
       android:layout_height="wrap_content"
       android:ems="10"
             android:layout_marginTop="10dp"
-      android:background="#f0f0f0"
       android:hint="Email"
       android:inputType="textPersonName" />
 
@@ -56,7 +52,6 @@
       android:layout_height="wrap_content"
       android:ems="10"
             android:layout_marginTop="10dp"
-      android:background="#f0f0f0"
       android:hint="Phone"
       android:inputType="textPersonName" />
 
@@ -67,7 +62,6 @@
       android:layout_height="wrap_content"
       android:ems="10"
             android:layout_marginTop="10dp"
-      android:background="#f0f0f0"
       android:hint="Full name"
       android:inputType="textPersonName" />
 

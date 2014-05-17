@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FF8300"
+    android:background="@drawable/backrepeat"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -56,7 +56,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@id/fragDashCoursesTutor"
-        android:text="Classes you&apos;re smart enough for:"
+        android:text="Courses where you are a tutor:"
         android:textAppearance="?android:attr/textAppearanceMedium" />
   
 
@@ -66,18 +66,8 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/fragDashAlerts"
         android:layout_above="@id/fragDashCoursesStudent"
-        android:text="Classes you&apos;re signed up for"
+        android:text="Courses where you are a student:"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <Button
-        android:id="@+id/btnGetMoreTutoring"
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/btnTutorMoreClasses"
-        android:layout_alignBottom="@+id/btnTutorMoreClasses"
-        android:layout_toRightOf="@+id/btnTutorMoreClasses"
-        android:text="Get more tutoring" />
 
     <TextView
         android:id="@+id/tvDashboardUserTextName"
@@ -90,7 +80,14 @@
         android:textSize="30dp"
         android:textStyle="bold"
         android:typeface="serif" />
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+                android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+    android:layout_centerInParent="true"
+    >
     <Button
         android:id="@+id/btnTutorMoreClasses"
         style="?android:attr/buttonStyleSmall"
@@ -100,4 +97,16 @@
         android:layout_alignParentBottom="true"
         android:text="Tutor more classes" />
 
+       <Button
+        android:id="@+id/btnGetMoreTutoring"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:layout_gravity="right"
+        android:layout_alignBaseline="@+id/btnTutorMoreClasses"
+        android:layout_alignBottom="@+id/btnTutorMoreClasses"
+        android:text="Get more tutoring" />
+    </LinearLayout>
+    
 </RelativeLayout>

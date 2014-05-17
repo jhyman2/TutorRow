@@ -9,6 +9,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -35,7 +38,6 @@ public class Helper {
 			file = new File(filePath);
 
 			if (!file.exists()) {
-				Log.d("noFile", "wtttttttf");
 				Log.d("filepath", filePath + "");
 				Log.d("fileee", file.exists() + "");
 				return null;
@@ -99,6 +101,20 @@ public class Helper {
 		}
 		
 		return s + " finished writing.";
+	}
+	
+	public static String MD5_Hash(String s) {
+        MessageDigest m = null;
+
+        try {
+                m = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+        }
+
+        m.update(s.getBytes(),0,s.length());
+        String hash = new BigInteger(1, m.digest()).toString(16);
+        return hash;
 	}
 	
 }

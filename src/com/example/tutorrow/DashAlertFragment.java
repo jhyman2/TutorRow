@@ -31,8 +31,7 @@ public class DashAlertFragment extends ListFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 				
-		String[] values = new String[] { "CMSC 201", "CMSC 202", "CMSC 203",
-		        "CMSC 313", "CMSC 311", "CMSC 341", "CMSC 411", "CMSC 421"};
+		String[] values = new String[] { "No recent alerts"};
 		    ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
 		        android.R.layout.simple_list_item_1, values);
 		    setListAdapter(adapter);

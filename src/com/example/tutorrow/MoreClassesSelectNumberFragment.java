@@ -31,8 +31,6 @@ public class MoreClassesSelectNumberFragment extends ListFragment{
 	
 	 @Override
 	  public void onListItemClick(ListView l, View v, int position, long id) {
-	    // do something with the data
 		 Toast.makeText(getActivity(), l.getItemAtPosition(position).toString(), Toast.LENGTH_LONG).show();
 	  }
-	
 }
