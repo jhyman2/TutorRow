@@ -1,0 +1,169 @@
+<html>
+<head>
+<meta charset ="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tutor Row</title>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script> 
+<script src="http://malsup.github.com/jquery.form.js"></script> 
+<style>
+.title {text-align:center;
+text-shadow: 2px 2px #000000;
+font-size: 80px;
+font-weight: bold;}
+form { 
+margin: 0 auto; 
+width:250px;
+}
+p {
+text-align:center;
+}
+body {
+background-color:#3399ff;
+margin-top:70;
+}
+input {
+background-color:LightBlue;
+}
+.definition{
+font-size:20px;
+font-family:"Verdana", Sans-serif, serif;
+font-style:italic;
+}
+.definAtBottom{
+background-color:#FFFFFF;
+position:relative;
+bottom:0;
+margin-top:12%;
+}
+.formStuff{
+font-family:"Verdana", Sans-serif, serif;
+color:Black;tut
+font-style:italic;
+}
+imgCenter{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+</style>
+<script type="text/javascript">
+function imageClick(url) {
+    window.location = url;
+}
+
+function checkValues()
+{
+	var emptyEle = [];
+	var x=document.forms["myForm"]["username"].value;
+	if(x==null || x=="")
+	{
+		emptyEle.push(" Username");
+		document.forms["myForm"]["username"].focus();
+	}
+
+	x=document.forms["myForm"]["password"].value;
+	if(x==null || x=="")
+	{
+		emptyEle.push(" Password");
+		document.forms["myForm"]["password"].focus();
+	}
+	
+	
+	x=document.forms["myForm"]["passwordConfirm"].value;
+	if(x==null || x=="")
+	{
+		emptyEle.push(" Password Confirm");
+		document.forms["myForm"]["passwordConfirm"].focus();
+	}
+	
+	x=document.forms["myForm"]["email"].value;
+	if(x==null || x=="")
+	{
+		emptyEle.push(" Email");
+		document.forms["myForm"]["email"].focus();
+	}
+	
+	x=document.forms["myForm"]["phone"].value;
+	if(x==null || x=="")
+	{
+		emptyEle.push(" Phone");
+		document.forms["myForm"]["phone"].focus();
+	}
+	
+	x=document.forms["myForm"]["name"].value;
+	if(x==null || x=="")
+	{
+		emptyEle.push(" Full Name");
+		document.forms["myForm"]["name"].focus();
+	}
+	
+	if(emptyEle.length != 0)
+	{
+		alert("The field(s)" +  emptyEle + " are empty.");
+		return false;
+	}
+	
+	x=document.forms["myForm"]["password"].value;
+	var password =document.forms["myForm"]["passwordConfirm"].value;
+	if(x != password)
+	{
+		alert("Passwords do not match.");
+		document.forms["myForm"]["password"].focus();
+		return false;
+	}
+	
+	var uname = document.forms["myForm"]["username"].value;
+	//password is set above
+	var name = document.forms["myForm"]["name"].value;
+	var email = document.forms["myForm"]["email"].value;
+	var phone = document.forms["myForm"]["phone"].value;
+	var jsonData = {'username':uname,'password':password,'name':name,'email':email,'phone':phone};
+
+	var request = $.ajax({
+	  url: "../nathan_hartmann/new_user.php",
+	  type: "POST",
+	  contentType: "json",
+	  data: jsonData,
+	  dataType: "json"
+	});
+
+	var y = 1;
+	
+}
+</script>
+</head>
+<body>
+<img src="logo.png" alt="TutuorRow" onclick="imageClick('../nathan_hartmann/index.html')" style="display: block; margin-left: auto; margin-right: auto;">
+</br>
+<p>Fill out the form bellow to become a member of the TutorRow community!</p>
+  <form name="myForm" onSubmit="return checkValues();" class="formStuff" style="display: block; margin-left: auto; margin-right: auto;">
+	<table>
+		<tr>
+			<td align="right">Username:</td>
+			<td align="left"><input type="text" name="username" /></td>
+		</tr>
+		<tr>
+			<td align="right">Password:</td>
+			<td align="left"><input type="password" name="password" maxlength="16" /></td>
+		</tr>
+		<tr>
+			<td align="right">Confirm Password:</td>
+			<td align="left"><input type="password" name="passwordConfirm" maxlength="16" /></td>
+		</tr>
+		<tr>
+			<td align="right">Email:</td>
+			<td align="left"><input type="text" name="email" /></td>
+		</tr>
+		<tr>
+			<td align="right">Phone:</td>
+			<td align="left"><input type="text" name="phone" /></td>
+		</tr>
+		<tr>
+			<td align="right">Full Name:</td>
+			<td align="left"><input type="text" name="name" /></td>
+		<tr>	
+			<td colspan="2" style="width:100%" align="center"><input type="submit" value="Submit"/></td>
+		</tr>
+	</table>
+  </form>
+</body>
+</html>
