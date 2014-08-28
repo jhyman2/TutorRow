@@ -2,6 +2,7 @@
 ## Eclipse
 #################
 
+Web\ Files
 *.pydevproject
 .project
 .metadata
