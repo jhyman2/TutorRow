@@ -1,6 +1,8 @@
 TutorRow
 ========
 
+[![Join the chat at https://gitter.im/jhyman2/TutorRow](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/jhyman2/TutorRow?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 This Android application is designed for students on a college campus to find tutors that are also fellow students.
 
 If a student wishes to be tutored, they will simply navigate to the class they need assistance in and request to be tutored.
