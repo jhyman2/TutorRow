@@ -11,7 +11,9 @@ app.use(bodyParser.json());
 
 const connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/todo';
 
-
+app.get('/', (req, res, next) => {
+  res.send('Up and rowing!');
+});
 
 app.post('/api/v1/todos', (req, res, next) => {
   console.log('req.body', req.body);
