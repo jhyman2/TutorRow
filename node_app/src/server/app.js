@@ -2,17 +2,24 @@
 
 import express     from 'express';
 import bodyParser  from 'body-parser';
+import http        from 'http';
 import path        from 'path';
 import pg          from 'pg';
 
 // db, app, and server listening setup
 const app = express();
+const server = http.Server(app);
+
+app.set('view engine', 'ejs');
+app.use(express.static(path.join(__dirname, '../../dist')));
+app.set('views', path.join(__dirname));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 const connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/todo';
 
-app.get('/', (req, res, next) => {
-  res.send('Up and rowing!');
+app.get('/', (req, res) => {
+  res.render('views/index.ejs');
 });
 
 app.post('/api/v1/todos', (req, res, next) => {
@@ -131,8 +138,6 @@ app.post('/api/v1/todos', (req, res, next) => {
 // });
 
 
-app.listen(3000, () => {
-  console.log('The row is up and rowing at localhost:3000');
-});
+server.listen(8080);
 
 module.exports = app;

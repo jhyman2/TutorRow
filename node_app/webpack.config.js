@@ -23,10 +23,10 @@ module.exports = {
     ]
   },
   output: {
-    path: __dirname + '/app',
+    path: __dirname + '/dist',
     filename: 'bundle.js'
   },
   devServer: {
-    contentBase: './app'
+    contentBase: './dist'
   }
 }
