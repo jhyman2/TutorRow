@@ -6,9 +6,15 @@ import http        from 'http';
 import path        from 'path';
 import pg          from 'pg';
 
+import React              from 'react';
+import { renderToString } from 'react-dom/server';
+import App                from './views/components/index';
+import template           from './views/components/template';
+
 // db, app, and server listening setup
-const app = express();
-const server = http.Server(app);
+const app              = express();
+const server           = http.Server(app);
+const connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/tutorrow';
 
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, '../../dist')));
@@ -16,43 +22,32 @@ app.set('views', path.join(__dirname));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-const connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/todo';
+pg.connect(connectionString, (err, client, done) => {
 
-app.get('/', (req, res) => {
-  res.render('views/index.ejs');
+  app.get('/', (req, res) => {
+      client.query('SELECT * FROM users', (err, result) => {
+        const users        = result.rows;
+        const initialState = { users };
+        const appString    = renderToString(<App {...initialState} />);
+
+        res.send(template({
+          body: appString,
+          title: 'Hello World from the server',
+          initialState: JSON.stringify(initialState)
+        }));
+      });
+  });
+
 });
 
-app.post('/api/v1/todos', (req, res, next) => {
-  console.log('req.body', req.body);
-  const results = [];
-  // Grab data from http request
-  const data = {
-    text: req.body.text,
-    complete: false
-  };
-  // Get a Postgres client from the connection pool
-  pg.connect(connectionString, (err, client, done) => {
-    // Handle connection errors
-    if(err) {
-      done();
-      console.log(err);
-      return res.status(500).json({success: false, data: err});
+process.on('exit', () => {
+  pg.end((err) => {
+    if (err) {
+      throw err;
+    } else {
+      console.log('Shutdown postgres successfully');
     }
-    // SQL Query > Insert Data
-    client.query('INSERT INTO items(text, complete) values($1, $2)',
-    [data.text, data.complete]);
-    // SQL Query > Select Data
-    const query = client.query('SELECT * FROM items ORDER BY id ASC');
-    // Stream results back one row at a time
-    query.on('row', (row) => {
-      results.push(row);
-    });
-    // After all data is returned, close connection and return results
-    query.on('end', () => {
-      done();
-      return res.json(results);
-    });
-  });
+  })
 });
 
 // app.set('view engine', 'ejs');
@@ -136,7 +131,6 @@ app.post('/api/v1/todos', (req, res, next) => {
 
 //   // delete users' own account
 // });
-
 
 server.listen(8080);
 
