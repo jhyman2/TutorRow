@@ -22,20 +22,38 @@ app.set('views', path.join(__dirname));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+function redirect (res) {
+  return function (err, results) {
+    res.redirect('/');
+  };
+}
+
 pg.connect(connectionString, (err, client, done) => {
 
   app.get('/', (req, res) => {
-      client.query('SELECT * FROM users', (err, result) => {
-        const users        = result.rows;
-        const initialState = { users };
-        const appString    = renderToString(<App {...initialState} />);
+    client.query('SELECT * FROM users', (err, result) => {
+      const users        = result.rows;
+      const initialState = { users };
+      const appString    = renderToString(<App {...initialState} />);
 
-        res.send(template({
-          body: appString,
-          title: 'Hello World from the server',
-          initialState: JSON.stringify(initialState)
-        }));
-      });
+      res.send(template({
+        body: appString,
+        title: 'Hello World from the server',
+        initialState: JSON.stringify(initialState)
+      }));
+    });
+  });
+
+  app.post('/add', (req, res) => {
+    var query = 'INSERT INTO users (first_name, last_name) VALUES ($1, $2);';
+
+    client.query(query, [req.body.first_name, req.body.last_name], redirect(res));
+  });
+
+  app.post('/delete', function (req, res) {
+    var query = 'DELETE FROM users WHERE first_name=$1 AND last_name=$2;';
+
+    client.query(query, [req.body.first_name, req.body.last_name], redirect(res));
   });
 
 });

@@ -9,10 +9,10 @@ export default ({ body, title, initialState }) => {
       </head>
 
       <body>
-        <div id="root">${body}</div>
+        <div id="root">${process.env.NODE_ENV === 'production' ? body : `<div>${body}</div>`}</div>
       </body>
+
+      <script src="/bundle.js"></script>
     </html>
   `;
 };
-
-// <script src="/bundle.js"></script>
