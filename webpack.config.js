@@ -1,6 +1,6 @@
 module.exports = {
   entry: {
-    app: './src/client/index.js'
+    app: './src/server/views/components/browser.js'
   },
   progress: true,
   colors: true,
