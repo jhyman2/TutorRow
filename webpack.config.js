@@ -1,6 +1,7 @@
 module.exports = {
   entry: {
-    app: './src/server/views/components/browser.js'
+    bundle: './src/server/views/components/login/browser.js',
+    main: './src/server/views/components/main_app/browser.js'
   },
   progress: true,
   colors: true,
@@ -24,7 +25,7 @@ module.exports = {
   },
   output: {
     path: __dirname + '/dist',
-    filename: 'bundle.js'
+    filename: '[name].js'
   },
   devServer: {
     contentBase: './dist'

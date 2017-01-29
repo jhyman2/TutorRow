@@ -38,6 +38,12 @@ export default class App extends Component {
           <input type="text" name="last_name" placeholder="Last name" />
           <input type="submit" value="Submit" />
         </form>
+        <form action="/login" method="post">
+          Login test:
+          <input type="text" name="first_name" placeholder="First name" />
+          <input type="text" name="last_name" placeholder="Last name" />
+          <input type="submit" value="Submit" />
+        </form>
       </div>
     );
   }
