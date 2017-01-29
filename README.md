@@ -1,5 +1,8 @@
+[![Stories in Ready](https://badge.waffle.io/jhyman2/TutorRow.png?label=ready&title=Ready)](https://waffle.io/jhyman2/TutorRow)
 TutorRow
 ========
+
+[![Stories in Ready](https://badge.waffle.io/jhyman2/TutorRow.png?label=ready&title=Ready)](http://waffle.io/jhyman2/TutorRow)
 
 [![Join the chat at https://gitter.im/jhyman2/TutorRow](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/jhyman2/TutorRow?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
