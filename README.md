@@ -10,8 +10,10 @@ If a student wishes to tutor, they can navigate to a class and indicate that the
 
 If no matches are present, each student will get an alert with the other student's contact information.
 
-### Building
 
-1) npm install
-2) npm run build
-3) npm run dev-server
+----
+## Building
+1. `npm install`
+2. `npm run build`
+3. `npm run dev-server`
+4. Go to `localhost:8080` in web browser
