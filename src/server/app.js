@@ -72,6 +72,21 @@ pg.connect(connectionString, (err, client, done) => {
     });
   });
 
+  // GET users from a given university
+  // ex: /users/university/UMBC
+  app.get('/users/university/:name', (req, res) => {
+    const query = 'SELECT * FROM universities WHERE UPPER(name)=UPPER($1);';
+
+    client.query(query, [req.params.name], (err, result) => {
+      const query = 'SELECT * FROM users WHERE university_id=$1;'
+      const university = result.rows[0];
+
+      client.query(query, [university.id], (err, result) => {
+        res.send(JSON.stringify(result.rows));
+      });
+    });
+  });
+
   app.post('/add', (req, res) => {
     const query = 'INSERT INTO users (first_name, last_name) VALUES ($1, $2);';
 
