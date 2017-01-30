@@ -81,9 +81,13 @@ pg.connect(connectionString, (err, client, done) => {
       const query = 'SELECT * FROM users WHERE university_id=$1;'
       const university = result.rows[0];
 
-      client.query(query, [university.id], (err, result) => {
-        res.send(JSON.stringify(result.rows));
-      });
+      if (!err && university) {
+        client.query(query, [university.id], (err, result) => {
+          res.send(JSON.stringify(result.rows));
+        });
+      } else {
+        res.send('No students for this university');
+      }
     });
   });
 
