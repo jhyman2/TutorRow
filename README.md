@@ -17,6 +17,5 @@ If no matches are present, each student will get an alert with the other student
 ----
 ## Building
 1. `npm install`
-2. `npm run build`
-3. `npm run dev-server`
-4. Go to `localhost:8080` in web browser
+2. `npm run dev`
+3. Go to `localhost:8080` in web browser
