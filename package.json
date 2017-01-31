@@ -4,11 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack",
+    "dev": "npm-run-all --parallel dev-server dev-frontend",
     "dev-server": "nodemon src/server",
-    "dev": "webpack-dev-server",
-    "server": "node src/server",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev-frontend": "webpack --progress --watch",
+    "build": "webpack",
+    "server": "node src/server"
   },
   "babel": {
     "presets": [
@@ -35,7 +35,7 @@
     "babel-preset-react": "^6.16.0",
     "babel-preset-stage-0": "^6.16.0",
     "nodemon": "^1.11.0",
-    "webpack": "^1.14.0",
-    "webpack-dev-server": "^1.16.2"
+    "npm-run-all": "^4.0.1",
+    "webpack": "^1.14.0"
   }
 }
