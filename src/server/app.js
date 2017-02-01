@@ -4,7 +4,9 @@ import express    from 'express';
 import bodyParser from 'body-parser';
 import http       from 'http';
 import path       from 'path';
+import passport   from 'passport';
 import pg         from 'pg';
+
 
 import React              from 'react';
 import { renderToString } from 'react-dom/server';
@@ -18,7 +20,9 @@ import MainAppTemplate from './views/components/main_app/template';
 // db, app, and server listening setup
 const app              = express();
 const server           = http.Server(app);
+const FacebookStrategy = require('passport-facebook').Strategy;
 const connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/tutorrow';
+const auth             = require('./auth.js');
 
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, '../../dist')));
@@ -26,11 +30,29 @@ app.set('views', path.join(__dirname));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+// user login setup
+app.use(passport.initialize());
+app.use(passport.session());
+
 function redirect (res) {
   return function (err, results) {
     res.redirect('/');
   };
 }
+
+passport.use(new FacebookStrategy({
+
+    // pull in our app id and secret from our auth.js file
+    clientID        : auth.facebookAuth.clientID,
+    clientSecret    : auth.facebookAuth.clientSecret,
+    callbackURL     : auth.facebookAuth.callbackURL
+
+}, (token, refreshToken, profile, done) => {
+  console.log(token);
+  console.log(refreshToken);
+  console.log(profile);
+  console.log(done);
+}));
 
 pg.connect(connectionString, (err, client, done) => {
 
@@ -97,11 +119,19 @@ pg.connect(connectionString, (err, client, done) => {
     client.query(query, [req.body.first_name, req.body.last_name], redirect(res));
   });
 
-  app.post('/delete', function (req, res) {
+  app.post('/delete', (req, res) => {
     const query = 'DELETE FROM users WHERE first_name=$1 AND last_name=$2;';
 
     client.query(query, [req.body.first_name, req.body.last_name], redirect(res));
   });
+
+  app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
+
+  app.get('/auth/facebook/callback',
+        passport.authenticate('facebook', {
+            successRedirect : '/users/university/UMBC',
+            failureRedirect : '/'
+        }));
 
 });
 

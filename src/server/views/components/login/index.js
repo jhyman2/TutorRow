@@ -44,6 +44,9 @@ export default class App extends Component {
           <input type="text" name="last_name" placeholder="Last name" />
           <input type="submit" value="Submit" />
         </form>
+        <p>Login or Register with:</p>
+
+        <a href="/auth/facebook">Facebook</a>
       </div>
     );
   }

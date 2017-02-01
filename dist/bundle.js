@@ -21582,6 +21582,16 @@
 	          _react2.default.createElement('input', { type: 'text', name: 'first_name', placeholder: 'First name' }),
 	          _react2.default.createElement('input', { type: 'text', name: 'last_name', placeholder: 'Last name' }),
 	          _react2.default.createElement('input', { type: 'submit', value: 'Submit' })
+	        ),
+	        _react2.default.createElement(
+	          'p',
+	          null,
+	          'Login or Register with:'
+	        ),
+	        _react2.default.createElement(
+	          'a',
+	          { href: '/auth/facebook' },
+	          'Facebook'
 	        )
 	      );
 	    }
