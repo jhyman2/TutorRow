@@ -23020,22 +23020,9 @@
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        'Welcome ',
-	        this.props.user.first_name,
-	        ' ',
-	        this.props.user.last_name,
-	        '! What school do you go to?',
-	        _react2.default.createElement(
-	          'ul',
-	          null,
-	          this.props.universities.map(function (university) {
-	            return _react2.default.createElement(
-	              'li',
-	              { key: university.id },
-	              university.name
-	            );
-	          })
-	        )
+	        'Welcome to Tutorrow, ',
+	        this.props.user.name,
+	        '!'
 	      );
 	    }
 	  }]);

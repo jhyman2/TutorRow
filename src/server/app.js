@@ -1,12 +1,13 @@
 'use strict';
 
-import express    from 'express';
-import bodyParser from 'body-parser';
-import http       from 'http';
-import path       from 'path';
-import passport   from 'passport';
-import pg         from 'pg';
-
+import express      from 'express';
+import cookieParser from 'cookie-parser';
+import session      from 'express-session';
+import bodyParser   from 'body-parser';
+import http         from 'http';
+import path         from 'path';
+import passport     from 'passport';
+import pg           from 'pg';
 
 import React              from 'react';
 import { renderToString } from 'react-dom/server';
@@ -30,7 +31,10 @@ app.set('views', path.join(__dirname));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.use(cookieParser()); // read cookies (needed for auth)
+
 // user login setup
+app.use(session({ secret: 'secret' }));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -41,23 +45,37 @@ function redirect (res) {
 }
 
 passport.use(new FacebookStrategy({
-
-    // pull in our app id and secret from our auth.js file
-    clientID        : auth.facebookAuth.clientID,
-    clientSecret    : auth.facebookAuth.clientSecret,
-    callbackURL     : auth.facebookAuth.callbackURL
-
+  // pull in our app id and secret from our auth.js file
+  clientID        : auth.facebookAuth.clientID,
+  clientSecret    : auth.facebookAuth.clientSecret,
+  callbackURL     : auth.facebookAuth.callbackURL
 }, (token, refreshToken, profile, done) => {
-  console.log(token);
-  console.log(refreshToken);
-  console.log(profile);
-  console.log(done);
+  // save user to DB
+  return done(null, profile._json);
 }));
+
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
+
+passport.deserializeUser((id, done) => {
+  done(null, id);
+});
 
 pg.connect(connectionString, (err, client, done) => {
 
+  // route middleware to make sure a user is logged in
+  function isLoggedIn(req, res, next) {
+    // if user is authenticated in the session, carry on
+    if (req.isAuthenticated())
+      return next();
+
+    // if they aren't redirect them to the home page
+    res.redirect('/');
+  }
+
   app.get('/', (req, res) => {
-    client.query('SELECT * FROM users', (err, result) => {
+    client.query('SELECT * FROM users;', (err, result) => {
       const users        = result.rows;
       const initialState = { users };
       const appString    = renderToString(<Login {...initialState} />);
@@ -94,6 +112,18 @@ pg.connect(connectionString, (err, client, done) => {
     });
   });
 
+  app.get('/welcome', (req, res) => {
+    const user         = req.user;
+    const initialState = { user };
+    const appString    = renderToString(<MainApp {...initialState} />);
+
+    res.send(MainAppTemplate({
+      body: appString,
+      title: 'Main App',
+      initialState: JSON.stringify(initialState)
+    }));
+  });
+
   // GET users from a given university
   // ex: /users/university/UMBC
   app.get('/users/university/:name', (req, res) => {
@@ -125,14 +155,17 @@ pg.connect(connectionString, (err, client, done) => {
     client.query(query, [req.body.first_name, req.body.last_name], redirect(res));
   });
 
-  app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
+  app.get('/auth/facebook', passport.authenticate('facebook'));
 
   app.get('/auth/facebook/callback',
         passport.authenticate('facebook', {
-            successRedirect : '/users/university/UMBC',
-            failureRedirect : '/'
+            successRedirect : '/welcome',
+            failureRedirect : '/invalidlogin'
         }));
 
+  app.get('/faceerror', (req, res) => {
+    res.send('Error logging into Facebook!');
+  });
 });
 
 process.on('exit', () => {
