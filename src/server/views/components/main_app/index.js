@@ -6,6 +6,7 @@ export default class Main_App extends Component {
     return (
       <div>
         Welcome to Tutorrow, {this.props.user.name}!
+        Your Facebook ID is {this.props.user.id}
       </div>
     );
   }

@@ -52,7 +52,7 @@
 
 	var _reactDom = __webpack_require__(32);
 
-	var _index = __webpack_require__(204);
+	var _index = __webpack_require__(205);
 
 	var _index2 = _interopRequireDefault(_index);
 
@@ -22978,7 +22978,8 @@
 
 
 /***/ },
-/* 204 */
+/* 204 */,
+/* 205 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -23005,33 +23006,42 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Main_App = function (_Component) {
-	  _inherits(Main_App, _Component);
+	var App = function (_Component) {
+	  _inherits(App, _Component);
 
-	  function Main_App() {
-	    _classCallCheck(this, Main_App);
+	  function App() {
+	    _classCallCheck(this, App);
 
-	    return _possibleConstructorReturn(this, (Main_App.__proto__ || Object.getPrototypeOf(Main_App)).apply(this, arguments));
+	    return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
 	  }
 
-	  _createClass(Main_App, [{
+	  _createClass(App, [{
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        'Welcome to Tutorrow, ',
-	        this.props.user.name,
-	        '! Your Facebook ID is ',
-	        this.props.user.id
+	        'Please choose your university, ',
+	        this.props.user.full_name,
+	        _react2.default.createElement(
+	          'select',
+	          null,
+	          this.props.universities.map(function (university) {
+	            return _react2.default.createElement(
+	              'option',
+	              { key: university.id, value: '' + university.id },
+	              university.name
+	            );
+	          })
+	        )
 	      );
 	    }
 	  }]);
 
-	  return Main_App;
+	  return App;
 	}(_react.Component);
 
-	exports.default = Main_App;
+	exports.default = App;
 
 /***/ }
 /******/ ]);
