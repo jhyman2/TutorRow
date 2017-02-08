@@ -1,8 +1,7 @@
 module.exports = {
   entry: {
     bundle: './src/server/views/components/login/browser.js',
-    main: './src/server/views/components/main_app/browser.js',
-    select_university: './src/server/views/components/select_university/browser.js'
+    main: ['babel-polyfill', './src/client/main_app/browser.js']
   },
   progress: true,
   colors: true,

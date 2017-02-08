@@ -4,10 +4,9 @@ import axios from 'axios';
 export default class App extends Component {
 
   // handler for deleting a student
-  deleteStudent (last_name, first_name) {
+  deleteStudent (full_name) {
     axios.post('/delete', {
-      last_name: last_name,
-      first_name: first_name
+      full_name: full_name
     })
     .then(function (response) {
       window.location = '/';
@@ -24,8 +23,8 @@ export default class App extends Component {
           {this.props.users.map((user) => {
             return (
               <li key={user.id}>
-                {user.last_name}, {user.first_name}
-                <button onClick={() => this.deleteStudent(user.last_name, user.first_name)}>
+                {user.full_name}
+                <button onClick={() => this.deleteStudent(user.full_name)}>
                   <img width="16" src="https://cdn1.iconfinder.com/data/icons/toolbar-signs/512/cancel-128.png" />
                 </button>
               </li>

@@ -1,4 +1,4 @@
-export default ({ body, title, initialState }) => {
+export default ({ title, initialState }) => {
   return `
     <!DOCTYPE html>
     <html>
@@ -9,7 +9,7 @@ export default ({ body, title, initialState }) => {
       </head>
 
       <body>
-        <div id="root">${process.env.NODE_ENV === 'production' ? body : `<div>${body}</div>`}</div>
+        <div id="root"></div>
       </body>
 
       <script src="/main.js"></script>

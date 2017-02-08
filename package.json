@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "npm-run-all --parallel dev-server dev-frontend",
+    "dev": "npm-run-all --parallel dev-frontend dev-server",
     "dev-server": "nodemon src/server",
     "dev-frontend": "webpack --progress --watch",
     "build": "webpack",
@@ -20,6 +20,7 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.15.3",
+    "babel-polyfill": "^6.22.0",
     "bcryptjs": "^2.4.0",
     "body-parser": "^1.15.2",
     "cookie-parser": "^1.4.3",
@@ -32,7 +33,10 @@
     "passport-local": "^1.0.0",
     "pg": "^6.1.1",
     "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "react-dom": "^15.4.2",
+    "react-redux": "^5.0.2",
+    "redux": "^3.6.0",
+    "redux-saga": "^0.14.3"
   },
   "devDependencies": {
     "babel-core": "^6.20.0",
