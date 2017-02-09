@@ -58,7 +58,7 @@ pg.connect(connectionString, (err, client, done) => {
   }, (token, refreshToken, profile, done) => {
     // save user to DB
     client.query('SELECT * FROM users WHERE facebook_id=$1;', [profile.id], (err, result) => {
-      if (result.rows.length) {
+      if (result && result.rows.length) {
         // if user already in database, find their record
         return done(null, result.rows[0].facebook_id);
       } else {
