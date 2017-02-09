@@ -12,8 +12,11 @@ import pg           from 'pg';
 // routes
 import HomeRoute    from './routes/home';
 import MainAppRoute from './routes/main_app';
+
 import GetUnisRoute from './routes/universities/get_unis';
+
 import GetUsersByUniNameRoute from './routes/users/get_by_uni_name';
+import UpdateUserWithUni      from './routes/users/update_with_uni';
 
 // db, app, and server listening setup
 const app              = express();
@@ -86,10 +89,6 @@ pg.connect(connectionString, (err, client, done) => {
    * UNIVERSITIES ROUTES
   */
 
-  app.post('/api/users/chooseUniversity/', (req, res) => {
-    // @todo
-  });
-
   // GET all universities
   app.get('/universities', GetUnisRoute(client));
 
@@ -101,6 +100,8 @@ pg.connect(connectionString, (err, client, done) => {
   // ex: /users/university/UMBC
   app.get('/users/university/:name', GetUsersByUniNameRoute(client));
 
+  // UPDATE user with university id
+  app.post('/user/university', UpdateUserWithUni(client));
 
   /*
    * AUTHENTICATION ROUTES

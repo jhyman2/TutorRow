@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import Loading from './components/loading';
 import SelectUni from './components/selectUni';
 
-import { testAction, fetchUnis } from './actions';
+import { updateUserWithUni, fetchUnis } from './actions';
 
 class Main_App extends Component {
 
@@ -21,9 +21,16 @@ class Main_App extends Component {
     if (this.props.loading) {
       toDisplay = <Loading />;
     } else if (this.props.user && !this.props.user.university_id) {
-      toDisplay = <SelectUni user={this.props.user} unis={this.props.universities} />;
+      toDisplay = <SelectUni
+                    user={this.props.user}
+                    unis={this.props.universities}
+                    updateUserWithUni={this.props.updateUserWithUni}
+                  />;
+    } else if (!this.props.user) {
+      toDisplay = <p>Please go back and log in until we figure out how to store cookies</p>
     } else {
-      toDisplay = <p>WELCOME</p>
+      // @todo: fetch courses for university
+      toDisplay = <p>WELCOME...i will now fetch user's courses</p>
     }
 
     return (
@@ -46,6 +53,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchUnis () {
       dispatch(fetchUnis());
+    },
+    updateUserWithUni (user_id, university_id) {
+      dispatch(updateUserWithUni(user_id, university_id));
     }
   }
 }

@@ -4,9 +4,10 @@ import { Provider }                     from 'react-redux';
 import createSagaMiddleware             from 'redux-saga';
 import { createStore, applyMiddleware } from 'redux';
 
-import reducers                         from './reducers';
-import sagas                            from './reducers/sagas';
-import App                              from './index';
+import reducers        from './reducers';
+import fetch_unis_saga from './reducers/fetch_unis_saga';
+import user_post_saga  from './reducers/user_post_saga';
+import App             from './index';
 
 const sagaMiddleware = createSagaMiddleware()
 
@@ -16,7 +17,8 @@ let store = createStore(
   applyMiddleware(sagaMiddleware)
 );
 
-sagaMiddleware.run(sagas);
+sagaMiddleware.run(fetch_unis_saga);
+sagaMiddleware.run(user_post_saga);
 
 render(
   <Provider store={store}>

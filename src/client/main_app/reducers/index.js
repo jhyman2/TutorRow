@@ -4,6 +4,12 @@ const user = (state = '', action) => {
   switch (action.type) {
     case 'CHANGE_USER':
       return state;
+    case 'USER_UPDATE_WITH_UNI_REQUESTED':
+      return state;
+    case 'USER_UPDATE_WITH_UNI_SUCCEEDED':
+      return action.user;
+    case 'USER_UPDATE_WITH_UNI_FAILED':
+      return -1;
     default:
       return state;
   }
@@ -32,6 +38,7 @@ const loading = (state = false, action) => {
       return state;
   }
 }
+
 
 const todoApp = combineReducers({
   user,
