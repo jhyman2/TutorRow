@@ -30,10 +30,26 @@ const universities = (state = [], action) => {
 
 const loading = (state = false, action) => {
   switch (action.type) {
+    case 'FETCH_ALL_UNI_COURSES_REQUESTED':
     case 'UNI_FETCH_REQUESTED':
       return true;
+    case 'ALL_COURSES_FETCH_SUCCEEDED':
+    case 'ALL_COURSES_FETCH_FAILED':
     case 'UNI_FETCH_SUCCEEDED':
       return false;
+    default:
+      return state;
+  }
+}
+
+const uni_courses = (state = [], action) => {
+  switch (action.type) {
+    case 'FETCH_ALL_UNI_COURSES_REQUESTED':
+      return [];
+    case 'ALL_COURSES_FETCH_SUCCEEDED':
+      return action.courses;
+    case 'ALL_COURSES_FETCH_FAILED':
+      return ['Err fetching'];
     default:
       return state;
   }
@@ -43,6 +59,7 @@ const loading = (state = false, action) => {
 const todoApp = combineReducers({
   user,
   universities,
+  uni_courses,
   loading
 });
 

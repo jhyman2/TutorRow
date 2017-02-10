@@ -15,6 +15,8 @@ import MainAppRoute from './routes/main_app';
 
 import GetUnisRoute from './routes/universities/get_unis';
 
+import GetCoursesByUni from './routes/courses/get_courses_by_uni';
+
 import GetUsersByUniNameRoute from './routes/users/get_by_uni_name';
 import UpdateUserWithUni      from './routes/users/update_with_uni';
 
@@ -77,7 +79,7 @@ pg.connect(connectionString, (err, client, done) => {
 
   /*
    * VIEWS ROUTES
-  */
+   */
 
   // Getting the Login screen
   app.get('/', HomeRoute(client));
@@ -87,14 +89,21 @@ pg.connect(connectionString, (err, client, done) => {
 
   /*
    * UNIVERSITIES ROUTES
-  */
+   */
 
   // GET all universities
   app.get('/universities', GetUnisRoute(client));
 
   /*
+   * COURSES ROUTES
+   */
+
+   // GET courses for a particular university
+   app.get('/courses/:university_id', GetCoursesByUni(client));
+
+  /*
    * USERS ROUTES
-  */
+   */
 
   // GET users from a given university
   // ex: /users/university/UMBC
@@ -105,7 +114,7 @@ pg.connect(connectionString, (err, client, done) => {
 
   /*
    * AUTHENTICATION ROUTES
-  */
+   */
 
   // GET facebook authentication
   app.get('/auth/facebook', passport.authenticate('facebook'));

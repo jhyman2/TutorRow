@@ -8,7 +8,7 @@ export default function (client) {
 
         if (user && user.university_id) {
           client.query('SELECT * FROM universities WHERE id=$1;', [user.university_id], (err, result) => {
-            user.university_id = result.rows[0].name;
+            user.university_name = result.rows[0].name;
 
             const initialState = { user };
 

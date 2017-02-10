@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 
-import Loading from './components/loading';
+import Loading   from './components/loading';
 import SelectUni from './components/selectUni';
+import Dashboard from './components/dashboard';
 
 import { updateUserWithUni, fetchUnis } from './actions';
 
@@ -29,8 +30,7 @@ class Main_App extends Component {
     } else if (!this.props.user) {
       toDisplay = <p>Please go back and log in until we figure out how to store cookies</p>
     } else {
-      // @todo: fetch courses for university
-      toDisplay = <p>WELCOME...i will now fetch user's courses</p>
+      toDisplay = <Dashboard />
     }
 
     return (

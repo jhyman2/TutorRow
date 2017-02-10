@@ -11,3 +11,10 @@ export const updateUserWithUni = (user_id, university_id) => {
     university_id
   };
 }
+
+export const fetchCoursesForUni = (university_id) => {
+  return {
+    type: 'FETCH_ALL_UNI_COURSES_REQUESTED',
+    university_id
+  };
+}
