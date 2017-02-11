@@ -35,7 +35,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser()); // read cookies (needed for auth)
 
 // user login setup
-app.use(session({ secret: 'secret' }));
+app.use(session({
+  secret: 'secret',
+  resave: true,
+  saveUninitialized: true
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 
