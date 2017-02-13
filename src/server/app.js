@@ -16,6 +16,7 @@ import MainAppRoute from './routes/main_app';
 import GetUnisRoute from './routes/universities/get_unis';
 
 import GetCoursesByUni from './routes/courses/get_courses_by_uni';
+import GetCourseById from './routes/courses/get_course_by_id'
 
 import GetUsersByUniNameRoute from './routes/users/get_by_uni_name';
 import UpdateUserWithUni      from './routes/users/update_with_uni';
@@ -104,6 +105,7 @@ pg.connect(connectionString, (err, client, done) => {
 
    // GET courses for a particular university
    app.get('/courses/:university_id', GetCoursesByUni(client));
+   app.get('/course/:university_name/:course_id', GetCourseById(client));
 
   /*
    * USERS ROUTES

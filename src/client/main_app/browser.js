@@ -5,10 +5,11 @@ import createSagaMiddleware             from 'redux-saga';
 import { createStore, applyMiddleware } from 'redux';
 
 // reducers and sagas
-import reducers               from './reducers';
-import fetch_unis_saga        from './reducers/fetch_unis_saga';
-import user_post_saga         from './reducers/user_post_saga';
-import fetch_all_courses_saga from './reducers/fetch_all_uni_courses';
+import reducers                   from './reducers';
+import fetch_unis_saga            from './reducers/fetch_unis_saga';
+import user_post_saga             from './reducers/user_post_saga';
+import fetch_all_courses_saga     from './reducers/fetch_all_uni_courses';
+import fetch_selected_course_saga from './reducers/fetch_selected_course_saga';
 
 // main app view starting point
 import App from './index';
@@ -24,6 +25,7 @@ let store = createStore(
 sagaMiddleware.run(fetch_unis_saga);
 sagaMiddleware.run(user_post_saga);
 sagaMiddleware.run(fetch_all_courses_saga);
+sagaMiddleware.run(fetch_selected_course_saga);
 
 render(
   <Provider store={store}>

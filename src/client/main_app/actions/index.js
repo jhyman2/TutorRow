@@ -2,7 +2,7 @@ export const fetchUnis = () => {
   return {
     type: 'UNI_FETCH_REQUESTED'
   };
-}
+};
 
 export const updateUserWithUni = (user_id, university_id) => {
   return {
@@ -10,11 +10,19 @@ export const updateUserWithUni = (user_id, university_id) => {
     user_id,
     university_id
   };
-}
+};
 
 export const fetchCoursesForUni = (university_id) => {
   return {
     type: 'FETCH_ALL_UNI_COURSES_REQUESTED',
     university_id
   };
-}
+};
+
+export const fetchSelectedCourse = (university_name, course_id) => {
+  return {
+    type: 'FETCH_SELECTED_COURSE_REQUESTED',
+    university_name,
+    course_id
+  }
+};
