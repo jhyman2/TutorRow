@@ -67,7 +67,8 @@ pg.connect(connectionString, (err, client, done) => {
     // pull in our app id and secret from our auth.js file
     clientID        : auth.facebookAuth.clientID,
     clientSecret    : auth.facebookAuth.clientSecret,
-    callbackURL     : auth.facebookAuth.callbackURL
+    callbackURL     : auth.facebookAuth.callbackURL,
+    profileFields   : ['id', 'displayName', ,'first_name', 'last_name', 'photos', 'email', 'age_range']
   }, (token, refreshToken, profile, done) => {
     // save user to DB
     client.query('SELECT * FROM users WHERE facebook_id=$1;', [profile.id], (err, result) => {
@@ -134,7 +135,7 @@ pg.connect(connectionString, (err, client, done) => {
    */
 
   // GET facebook authentication
-  app.get('/auth/facebook', passport.authenticate('facebook'));
+  app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email'] }));
 
   // Callback after authenticating with Facebook
   app.get('/auth/facebook/callback', passport.authenticate('facebook', {
