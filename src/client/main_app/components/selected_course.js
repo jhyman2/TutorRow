@@ -18,7 +18,7 @@ class Selected_Course_Component extends Component {
     let ui_tutors = [];
 
     tutors.forEach((tutor) => {
-      ui_tutors.push(<p>{tutor.full_name}</p>);
+      ui_tutors.push(<p key={tutor.student_id}>{tutor.full_name}</p>);
     });
 
     return ui_tutors;
@@ -28,7 +28,7 @@ class Selected_Course_Component extends Component {
     const ui_students = [];
 
     students.forEach((student) => {
-      ui_students.push(<p>{student.full_name}</p>);
+      ui_students.push(<p key={student.student_id}>{student.full_name}</p>);
     });
 
     return ui_students;

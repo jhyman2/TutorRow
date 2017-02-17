@@ -7,7 +7,6 @@ const fetchStudentsPromise = function (course_id) {
     });
 };
 
-// worker Saga: will be fired on FETCH_ALL_UNI_COURSES_REQUESTED actions
 function* fetchStudents (action) {
    try {
       const students = yield call(fetchStudentsPromise, action.course_id);
@@ -18,10 +17,6 @@ function* fetchStudents (action) {
    }
 }
 
-/*
-  Starts fetchUser on each dispatched `UNI_FETCH_REQUESTED` action.
-  Allows concurrent fetches of students.
-*/
 function* fetch_students_saga () {
   yield takeEvery("FETCH_STUDENTS_FOR_COURSE_REQUESTED", fetchStudents);
 }

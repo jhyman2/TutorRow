@@ -10,7 +10,6 @@ const postUniPromise = function (user_id, university_id) {
   });
 };
 
-// worker Saga: will be fired on USER_FETCH_REQUESTED actions
 function* postUserUni(action) {
    try {
       const user = yield call(postUniPromise, action.user_id, action.university_id);
@@ -21,10 +20,6 @@ function* postUserUni(action) {
    }
 }
 
-/*
-  Starts fetchUser on each dispatched `UNI_FETCH_REQUESTED` action.
-  Allows concurrent fetches of user.
-*/
 function* user_post_saga() {
   yield takeEvery("USER_UPDATE_WITH_UNI_REQUESTED", postUserUni);
 }
