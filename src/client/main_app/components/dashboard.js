@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect }          from 'react-redux'
 
 import Loading from './loading';
+import Course_Card     from './course_card';
 import Selected_Course from './selected_course';
 
 import { fetchSelectedCourse, fetchCoursesForUni } from '../actions/';
@@ -19,34 +20,8 @@ class DashboardComponent extends Component {
   }
 
   prepareCourses (courses) {
-    const courseContainerStyles = {
-      display: 'inline-block',
-      padding: '10px',
-      border: '1px solid lightgrey'
-    };
-
-    const courseTitleStyles = {
-      margin: '0 0 10px 0'
-    };
-
-    const courseDescripStyles = {
-      display: 'block',
-      marginLeft: '20px'
-    };
-
-    const summaryStyles = {
-      maxWidth: '300px'
-    };
-
     return courses.map((course) => {
-      return (
-        <div key={`${course.department}_${course.course_num}`} style={courseContainerStyles}>
-          <p onClick={this.openCourseInfo.bind(this, course.id)} style={courseTitleStyles}>{course.department} {course.course_num} - {course.name}</p>
-          <span style={courseDescripStyles}>Number of credits: {course.num_credits}</span>
-          <span style={courseDescripStyles}>Professor: {course.professor}</span>
-          <p>Course summary: {course.description}</p>
-        </div>
-      );
+      return <Course_Card key={course.id} course={course} select={this.openCourseInfo.bind(this)} />
     });
   }
 

@@ -72,13 +72,41 @@ const selected_course = (state = null, action) => {
   }
 }
 
+const students = (state = [], action) => {
+  switch (action.type) {
+    case 'FETCH_STUDENTS_FOR_COURSE_REQUESTED':
+      return [];
+    case 'STUDENTS_FOR_COURSE_FETCH_SUCCEEDED':
+      return action.students;
+    case 'STUDENTS_FOR_COURSE_FETCH_FAILED':
+      return ['Err fetching'];
+    default:
+      return state;
+  }
+}
+
+const tutors = (state = [], action) => {
+  switch (action.type) {
+    case 'FETCH_TUTORS_FOR_COURSE_REQUESTED':
+      return [];
+    case 'TUTORS_FOR_COURSE_FETCH_SUCCEEDED':
+      return action.tutors;
+    case 'TUTORS_FOR_COURSE_FETCH_FAILED':
+      return ['Err fetching'];
+    default:
+      return state;
+  }
+}
+
 
 const todoApp = combineReducers({
   user,
   universities,
   uni_courses,
   loading,
-  selected_course
+  selected_course,
+  students,
+  tutors
 });
 
 export default todoApp;

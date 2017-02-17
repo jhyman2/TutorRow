@@ -26,3 +26,17 @@ export const fetchSelectedCourse = (university_name, course_id) => {
     course_id
   }
 };
+
+export const fetchStudentsForCourse = (course_id) => {
+  return {
+    type: 'FETCH_STUDENTS_FOR_COURSE_REQUESTED',
+    course_id
+  }
+};
+
+export const fetchTutorsForCourse = (course_id) => {
+  return {
+    type: 'FETCH_TUTORS_FOR_COURSE_REQUESTED',
+    course_id
+  }
+};

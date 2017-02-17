@@ -16,10 +16,13 @@ import MainAppRoute from './routes/main_app';
 import GetUnisRoute from './routes/universities/get_unis';
 
 import GetCoursesByUni from './routes/courses/get_courses_by_uni';
-import GetCourseById from './routes/courses/get_course_by_id'
+import GetCourseById   from './routes/courses/get_course_by_id'
 
 import GetUsersByUniNameRoute from './routes/users/get_by_uni_name';
 import UpdateUserWithUni      from './routes/users/update_with_uni';
+
+import GetStudentsForCourse from './routes/users/get_students_for_course';
+import GetTutorsForCourse   from './routes/users/get_tutors_for_course';
 
 // db, app, and server listening setup
 const app              = express();
@@ -114,6 +117,14 @@ pg.connect(connectionString, (err, client, done) => {
   // GET users from a given university
   // ex: /users/university/UMBC
   app.get('/users/university/:name', GetUsersByUniNameRoute(client));
+
+  // GET students for a given course
+  // ex: /students/24
+  app.get('/students/:course_id', GetStudentsForCourse(client));
+
+  // GET tutors for a given course
+  // ex: /tutors/24
+  app.get('/tutors/:course_id', GetTutorsForCourse(client));
 
   // UPDATE user with university id
   app.post('/user/university', UpdateUserWithUni(client));
