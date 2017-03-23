@@ -18,6 +18,11 @@ import GetUnisRoute from './routes/universities/get_unis';
 import GetCoursesByUni from './routes/courses/get_courses_by_uni';
 import GetCourseById   from './routes/courses/get_course_by_id'
 
+import PostCourseSignUpAsTutor   from './routes/courses/post_course_sign_up_as_tutor';
+import PostCourseSignUpAsStudent from './routes/courses/post_course_sign_up_as_tutor';
+import CoursesCancelTutoring     from './routes/courses/course_cancel_tutoring';
+import CoursesCancelStudenting   from './routes/courses/course_cancel_studenting';
+
 import GetUsersByUniNameRoute from './routes/users/get_by_uni_name';
 import UpdateUserWithUni      from './routes/users/update_with_uni';
 
@@ -70,6 +75,7 @@ pg.connect(connectionString, (err, client, done) => {
     callbackURL     : auth.facebookAuth.callbackURL,
     profileFields   : ['id', 'displayName', ,'first_name', 'last_name', 'photos', 'email', 'age_range']
   }, (token, refreshToken, profile, done) => {
+    console.log(profile);
     // save user to DB
     client.query('SELECT * FROM users WHERE facebook_id=$1;', [profile.id], (err, result) => {
       if (result && result.rows.length) {
@@ -110,6 +116,14 @@ pg.connect(connectionString, (err, client, done) => {
    // GET courses for a particular university
    app.get('/courses/:university_id', GetCoursesByUni(client));
    app.get('/course/:university_name/:course_id', GetCourseById(client));
+
+   // Signing up or removing oneself as a student or a tutor
+   app.post('/course/signup/studenting/:course_id', PostCourseSignUpAsStudent(client));
+   app.post('/course/signup/tutoring/:course_id', PostCourseSignUpAsTutor(client));
+   app.delete('/course/cancel/tutoring/:course_id', CoursesCancelTutoring(client));
+   app.delete('/course/cancel/studenting/:course_id', CoursesCancelStudenting(client));
+
+   // @todo: finish these and the rest of the sagas for the 3 remaining actions
 
   /*
    * USERS ROUTES

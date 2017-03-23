@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import { connect }          from 'react-redux'
 
 // actions
-import { fetchStudentsForCourse, fetchTutorsForCourse } from '../actions/';
+import {
+  fetchStudentsForCourse, fetchTutorsForCourse,
+  cancelStudenting, cancelTutoring,
+  signUpStudenting, signUpTutoring
+} from '../actions/';
 
 // components
 import Course_Card from './course_card';
@@ -34,6 +38,27 @@ class Selected_Course_Component extends Component {
     return ui_students;
   }
 
+  prepareSignUps (user, students, tutors, course) {
+    function containsUser (item) {
+      return item.student_id === user.id;
+    }
+
+    const { selected_course } = this.props;
+
+    if (students.find(containsUser)) {
+      return <button onClick={this.props.cancelStudenting.bind(this, user, selected_course)}>I no longer need help this class</button>
+    } else if (tutors.find(containsUser)) {
+      return <button onClick={this.props.cancelTutoring.bind(this, user, selected_course)}>I no longer want to tutor this class</button>
+    } else {
+      return (
+        <div class="buttons-signup">
+          <button onClick={this.props.signUpStudenting.bind(this, user, selected_course)}>I need help in this class</button>
+          <button onClick={this.props.signUpTutoring.bind(this, user, selected_course)}>I want to tutor this class</button>
+        </div>
+      );
+    }
+  }
+
   render() {
     const course = this.props.selected_course;
 
@@ -44,6 +69,7 @@ class Selected_Course_Component extends Component {
         {this.prepareTutors(this.props.tutors)}
         <p>Students wanting to learn:</p>
         {this.prepareStudents(this.props.students)}
+        {this.prepareSignUps(this.props.user, this.props.students, this.props.tutors, this.props.selected_course)}
       </div>
     );
   }
@@ -66,6 +92,18 @@ const mapDispatchToProps = (dispatch) => {
     },
     fetchTutorsForCourse (course_id) {
       dispatch(fetchTutorsForCourse(course_id));
+    },
+    cancelStudenting (user, selected_course) {
+      dispatch(cancelStudenting(user, selected_course.id));
+    },
+    cancelTutoring (user, selected_course) {
+      dispatch(cancelTutoring(user, selected_course.id));
+    },
+    signUpStudenting (user, selected_course) {
+      dispatch(signUpStudenting(user, selected_course.id));
+    },
+    signUpTutoring (user, selected_course) {
+      dispatch(signUpTutoring(user, selected_course.id));
     }
   }
 }

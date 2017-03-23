@@ -78,6 +78,16 @@ const students = (state = [], action) => {
       return [];
     case 'STUDENTS_FOR_COURSE_FETCH_SUCCEEDED':
       return action.students;
+    case 'SIGNUP_STUDENTING_FOR_COURSE_SUCCEEDED':
+      return state.concat({ student_id: action.user_id });
+    case 'CANCEL_STUDENTING_FOR_COURSE_SUCCEEDED':
+      const index = state.findIndex((student) => student.student_id === action.user_id);
+
+      if (index > -1) {
+        return state.slice(0, index).concat(state.slice(index + 1, state.length));
+      }
+
+      return state;
     case 'STUDENTS_FOR_COURSE_FETCH_FAILED':
       return ['Err fetching'];
     default:
@@ -91,6 +101,16 @@ const tutors = (state = [], action) => {
       return [];
     case 'TUTORS_FOR_COURSE_FETCH_SUCCEEDED':
       return action.tutors;
+    case 'SIGNUP_TUTORING_FOR_COURSE_SUCCEEDED':
+      return state.concat({ student_id: action.user_id });
+    case 'CANCEL_TUTORING_FOR_COURSE_SUCCEEDED':
+      const index = state.findIndex((student) => student.student_id === action.user_id);
+
+      if (index > -1) {
+        return state.slice(0, index).concat(state.slice(index + 1, state.length));
+      }
+
+      return state;
     case 'TUTORS_FOR_COURSE_FETCH_FAILED':
       return ['Err fetching'];
     default:

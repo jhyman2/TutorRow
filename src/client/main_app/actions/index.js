@@ -40,3 +40,37 @@ export const fetchTutorsForCourse = (course_id) => {
     course_id
   }
 };
+
+export const cancelStudenting = (user_id, course_id) => {
+  return {
+    type: 'CANCEL_STUDENTING_FOR_COURSE_REQUESTED',
+    course_id,
+    user_id
+  };
+};
+
+export const cancelTutoring = (user_id, course_id) => {
+  return {
+    type: 'CANCEL_TUTORING_FOR_COURSE_REQUESTED',
+    course_id,
+    user_id
+  };
+};
+
+export const signUpStudenting = (user_id, course_id) => {
+  return {
+    type: 'SIGNUP_STUDENTING_FOR_COURSE_REQUESTED',
+    course_id,
+    user_id
+  };
+};
+
+export const signUpTutoring = (user_id, course_id) => {
+  return {
+    type: 'SIGNUP_TUTORING_FOR_COURSE_REQUESTED',
+    course_id,
+    user_id
+  };
+}
+
+// @todo fill in types, and create sagas
