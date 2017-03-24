@@ -51,7 +51,7 @@ class Selected_Course_Component extends Component {
       return <button onClick={this.props.cancelTutoring.bind(this, user, selected_course)}>I no longer want to tutor this class</button>
     } else {
       return (
-        <div class="buttons-signup">
+        <div className="buttons-signup">
           <button onClick={this.props.signUpStudenting.bind(this, user, selected_course)}>I need help in this class</button>
           <button onClick={this.props.signUpTutoring.bind(this, user, selected_course)}>I want to tutor this class</button>
         </div>

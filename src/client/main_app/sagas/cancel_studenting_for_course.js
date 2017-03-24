@@ -1,12 +1,9 @@
 import { call, put, takeEvery, takeLatest } from 'redux-saga/effects'
 
 const cancelStudentingPromise = function (user_id, course_id) {
-  return fetch(`/course/cancel/studenting/${course_id}`, {
+  return fetch(`/course/cancel/${user_id.id}/studenting/${course_id}`, {
     method: 'DELETE'
   })
-    .then((res) => {
-      return res.json();
-    });
 };
 
 function* cancelStudenting (action) {

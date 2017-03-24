@@ -118,10 +118,10 @@ pg.connect(connectionString, (err, client, done) => {
    app.get('/course/:university_name/:course_id', GetCourseById(client));
 
    // Signing up or removing oneself as a student or a tutor
-   app.post('/course/signup/studenting/:course_id', PostCourseSignUpAsStudent(client));
-   app.post('/course/signup/tutoring/:course_id', PostCourseSignUpAsTutor(client));
-   app.delete('/course/cancel/tutoring/:course_id', CoursesCancelTutoring(client));
-   app.delete('/course/cancel/studenting/:course_id', CoursesCancelStudenting(client));
+   app.post('/course/signup/:user_id/studenting/:course_id', PostCourseSignUpAsStudent(client));
+   app.post('/course/signup/:user_id/tutoring/:course_id', PostCourseSignUpAsTutor(client));
+   app.delete('/course/cancel/:user_id/tutoring/:course_id', CoursesCancelTutoring(client));
+   app.delete('/course/cancel/:user_id/studenting/:course_id', CoursesCancelStudenting(client));
 
    // @todo: finish these and the rest of the sagas for the 3 remaining actions
 

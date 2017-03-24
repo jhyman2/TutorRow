@@ -1,12 +1,9 @@
 import { call, put, takeEvery, takeLatest } from 'redux-saga/effects'
 
 const signUpTutoringPromise = function (user_id, course_id) {
-  return fetch(`/courses/signup/tutoring/${course_id}`, {
+  return fetch(`/course/signup/${user_id.id}/tutoring/${course_id}`, {
     method: 'POST'
   })
-    .then((res) => {
-      return res.json();
-    });
 };
 
 function* signUpTutoring (action) {
