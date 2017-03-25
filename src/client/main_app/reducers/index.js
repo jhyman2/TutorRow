@@ -79,12 +79,9 @@ const students = (state = [], action) => {
     case 'STUDENTS_FOR_COURSE_FETCH_SUCCEEDED':
       return action.students;
     case 'SIGNUP_STUDENTING_FOR_COURSE_SUCCEEDED':
-      return state.concat({ student_id: action.user_id });
+      return state.concat(action.user_id);
     case 'CANCEL_STUDENTING_FOR_COURSE_SUCCEEDED':
-      const index = state.findIndex((student) => student.student_id === action.user_id);
-      console.log('state', state);
-      console.log('action', action);
-      console.log('index', index);
+      const index = state.findIndex((student) => student.student_id === action.user_id.id);
 
       if (index > -1) {
         return state.slice(0, index).concat(state.slice(index + 1, state.length));
@@ -105,12 +102,10 @@ const tutors = (state = [], action) => {
     case 'TUTORS_FOR_COURSE_FETCH_SUCCEEDED':
       return action.tutors;
     case 'SIGNUP_TUTORING_FOR_COURSE_SUCCEEDED':
-      return state.concat({ student_id: action.user_id });
+      return state.concat(action.user_id);
     case 'CANCEL_TUTORING_FOR_COURSE_SUCCEEDED':
-      const index = state.findIndex((student) => student.student_id === action.user_id);
-      console.log('state', state);
-      console.log('action', action);
-      console.log('index', index);
+      const index = state.findIndex((student) => student.student_id === action.user_id.id);
+
       if (index > -1) {
         return state.slice(0, index).concat(state.slice(index + 1, state.length));
       }
@@ -122,7 +117,6 @@ const tutors = (state = [], action) => {
       return state;
   }
 }
-
 
 const todoApp = combineReducers({
   user,
