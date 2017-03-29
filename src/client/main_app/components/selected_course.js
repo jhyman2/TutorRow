@@ -22,7 +22,7 @@ class Selected_Course_Component extends Component {
     let ui_tutors = [];
 
     tutors.forEach((tutor) => {
-      ui_tutors.push(<p key={tutor.student_id}>{tutor.full_name}</p>);
+      ui_tutors.push(<p key={tutor.student_id || tutor.id}>{tutor.full_name}</p>);
     });
 
     return ui_tutors;
@@ -32,7 +32,7 @@ class Selected_Course_Component extends Component {
     const ui_students = [];
 
     students.forEach((student) => {
-      ui_students.push(<p key={student.student_id}>{student.full_name}</p>);
+      ui_students.push(<p key={student.student_id || student.id}>{student.full_name}</p>);
     });
 
     return ui_students;
@@ -60,16 +60,16 @@ class Selected_Course_Component extends Component {
   }
 
   render() {
-    const course = this.props.selected_course;
+    const { user, selected_course, tutors, students } = this.props;
 
     return (
       <div>
-        <Course_Card course={course} />
+        <Course_Card course={selected_course} />
         <p>Available tutors:</p>
-        {this.prepareTutors(this.props.tutors)}
+        {this.prepareTutors(tutors)}
         <p>Students wanting to learn:</p>
-        {this.prepareStudents(this.props.students)}
-        {this.prepareSignUps(this.props.user, this.props.students, this.props.tutors, this.props.selected_course)}
+        {this.prepareStudents(students)}
+        {this.prepareSignUps(user, students, tutors, selected_course)}
       </div>
     );
   }

@@ -79,7 +79,11 @@ const students = (state = [], action) => {
     case 'STUDENTS_FOR_COURSE_FETCH_SUCCEEDED':
       return action.students;
     case 'SIGNUP_STUDENTING_FOR_COURSE_SUCCEEDED':
-      return state.concat(action.user_id);
+      // for now, this will take a user.id and assign it to a student_id to match comparisons between users and course_instances
+      let user = Object.assign({}, action.user_id);
+      user.student_id = user.id;
+
+      return state.concat(user);
     case 'CANCEL_STUDENTING_FOR_COURSE_SUCCEEDED':
       const index = state.findIndex((student) => student.student_id === action.user_id.id);
 
@@ -102,10 +106,13 @@ const tutors = (state = [], action) => {
     case 'TUTORS_FOR_COURSE_FETCH_SUCCEEDED':
       return action.tutors;
     case 'SIGNUP_TUTORING_FOR_COURSE_SUCCEEDED':
-      return state.concat(action.user_id);
+      // for now, this will take a user.id and assign it to a student_id to match comparisons between users and course_instances
+      let user = Object.assign({}, action.user_id);
+      user.student_id = user.id;
+
+      return state.concat(user);
     case 'CANCEL_TUTORING_FOR_COURSE_SUCCEEDED':
       const index = state.findIndex((student) => student.student_id === action.user_id.id);
-
       if (index > -1) {
         return state.slice(0, index).concat(state.slice(index + 1, state.length));
       }

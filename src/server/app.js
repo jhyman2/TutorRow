@@ -75,7 +75,6 @@ pg.connect(connectionString, (err, client, done) => {
     callbackURL     : auth.facebookAuth.callbackURL,
     profileFields   : ['id', 'displayName', ,'first_name', 'last_name', 'photos', 'email', 'age_range']
   }, (token, refreshToken, profile, done) => {
-    console.log(profile);
     // save user to DB
     client.query('SELECT * FROM users WHERE facebook_id=$1;', [profile.id], (err, result) => {
       if (result && result.rows.length) {

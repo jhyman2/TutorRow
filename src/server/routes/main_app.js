@@ -11,7 +11,6 @@ export default function (client) {
             user.university_name = result.rows[0].name;
 
             const initialState = { user };
-
             res.send(MainAppTemplate({
               title: 'Main App',
               initialState: JSON.stringify(initialState)

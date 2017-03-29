@@ -50,8 +50,6 @@ export const cancelStudenting = (user_id, course_id) => {
 };
 
 export const cancelTutoring = (user_id, course_id) => {
-  console.log('user_id', user_id);
-  console.log('course_id', course_id);
   return {
     type: 'CANCEL_TUTORING_FOR_COURSE_REQUESTED',
     course_id,
