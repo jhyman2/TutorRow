@@ -5,14 +5,23 @@ TutorRow
 
 [![Join the chat at https://gitter.im/jhyman2/TutorRow](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/jhyman2/TutorRow?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-This application is designed for students on a college campus to find tutors that are also fellow students.
+### What is TutorRow?
+
+TutorRow is for students on a college campus to get help from other students in their class.
+
+### How does it work?
 
 If a student wishes to be tutored, they will simply navigate to the class they need assistance in and request to be tutored.
 
-If a student wishes to tutor, they can navigate to a class and indicate that they are able to tutor.  If matches are present, then the students are given the ability to contact each other.
+If a student wishes to tutor, they can navigate to a class and indicate that they are able to tutor. If matches are present, then the students are given the ability to contact each other.
 
-If no matches are present, each student will get an alert with the other student's contact information.
+### Why is this better than a tutoring service?
 
+When I needed help in my classes (which was all the time), all it would take is for someone who knows the course material to break it down for me really quickly. Tutoring services require ramp-up time and they charge way too much money.
+
+### My personal inspiration for building this
+
+When I was taking a philosophy course calle deductive logic, I stopped paying attention in class and doing the required readings. I just happened to be swamped that semester and wound up putting this class on the back burner. I had a fantastic friend in the class who told me he could spend an hour in the library with me reviewing the important parts of the readings with me that were going to be on the midterm. After 1 hour, he had told me everything the professor said was going to be on the exam and then taught me the concepts we learned in class. I literally got 100% on this exam and realized how great learning from peers can be.
 
 ----
 ## Building
