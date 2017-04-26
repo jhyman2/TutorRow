@@ -72,5 +72,3 @@ export const signUpTutoring = (user_id, course_id) => {
     user_id
   };
 }
-
-// @todo fill in types, and create sagas

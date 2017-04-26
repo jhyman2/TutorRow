@@ -118,8 +118,6 @@ export default selected_course;
 
 /**
  * @todo
- * Add in functionality for this page (add it to user's courses for tutoring, learning)
- * Display all course information
  * Add back button (might need react router)
  * Have a little icon indicating if there are tutors/students available
  */

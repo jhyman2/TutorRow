@@ -125,7 +125,7 @@ const tutors = (state = [], action) => {
   }
 }
 
-const todoApp = combineReducers({
+const reducers = combineReducers({
   user,
   universities,
   uni_courses,
@@ -135,4 +135,4 @@ const todoApp = combineReducers({
   tutors
 });
 
-export default todoApp;
+export default reducers;

@@ -122,8 +122,6 @@ pg.connect(connectionString, (err, client, done) => {
    app.delete('/course/cancel/:user_id/tutoring/:course_id', CoursesCancelTutoring(client));
    app.delete('/course/cancel/:user_id/studenting/:course_id', CoursesCancelStudenting(client));
 
-   // @todo: finish these and the rest of the sagas for the 3 remaining actions
-
   /*
    * USERS ROUTES
    */
