@@ -29,5 +29,6 @@ When I was taking a philosophy course calle deductive logic, I stopped paying at
 - `npm install`
 - Download postgres and run it
 - set up schema like so:
+![SSS1](https://github.com/jhyman2/TutorRow/blob/master/schema.png?raw=true)
 - `npm run start-dev`
 - Go to `localhost:8080` in web browser
