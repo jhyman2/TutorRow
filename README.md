@@ -25,6 +25,9 @@ When I was taking a philosophy course calle deductive logic, I stopped paying at
 
 ----
 ## Building
-1. `npm install`
-2. `npm run dev-server`
-3. Go to `localhost:8080` in web browser
+- You will need auth.js. It's a secret. It goes in src/server/auth.js
+- `npm install`
+- Download postgres and run it
+- set up schema like so:
+- `npm run start-dev`
+- Go to `localhost:8080` in web browser
