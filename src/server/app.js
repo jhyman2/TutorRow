@@ -35,6 +35,7 @@ const server           = http.Server(app);
 const FacebookStrategy = require('passport-facebook').Strategy;
 const connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/tutorrow';
 const auth             = require('./auth.js');
+const pool             = new pg.Pool()
 
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, '../../dist')));

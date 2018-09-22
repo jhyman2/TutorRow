@@ -3,23 +3,33 @@ module.exports = {
     bundle: './src/server/views/components/login/browser.js',
     main: ['babel-polyfill', './src/client/main_app/browser.js']
   },
-  progress: true,
-  colors: true,
   module: {
-    loaders: [{
-      test: /\.jsx?$/,
-      exclude: /node_modules/,
-      loader: 'babel',
-      query: {
-        presets: ['react', 'es2015', 'stage-0']
+    rules: [
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+        query: {
+          presets: ['react', 'es2015', 'stage-0']
+        }
+      },
+      {
+        test: /\.css$/,
+        use: [
+          'style-loader',
+          'css-loader'
+        ]
+      },
+      {
+        test: /\.(png|svg|jpg|gif)$/,
+        use: [
+          'file-loader'
+        ]
       }
-    }]
-  },
-  resolve: {
-    extensions: ['', '.js', '.html']
+    ]
   },
   resolveLoader: {
-    modulesDirectories: [
+    modules: [
         './node_modules'
     ]
   },
@@ -28,6 +38,7 @@ module.exports = {
     filename: '[name].js'
   },
   devServer: {
-    contentBase: './dist'
+    contentBase: './dist',
+    color: true
   }
 }
