@@ -26,7 +26,7 @@ When I was taking a philosophy course calle deductive logic, I stopped paying at
 ----
 ## Building
 - You will need auth.js. It's a secret. It goes in src/server/auth.js
-- Install yarn on your machine
+- Install [yarn](https://yarnpkg.com) on your machine
 - From the root of this directory, run `yarn install`
 - Download [postgres](https://www.postgresql.org/download/) and install WITH pgadmin.
 - Create a server in pgadmin called tutorrow
