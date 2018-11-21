@@ -26,9 +26,14 @@ When I was taking a philosophy course calle deductive logic, I stopped paying at
 ----
 ## Building
 - You will need auth.js. It's a secret. It goes in src/server/auth.js
-- `npm install`
-- Download postgres and run it
-- set up schema like so:
-![SSS1](https://github.com/jhyman2/TutorRow/blob/master/schema.png?raw=true)
-- `npm run start-dev`
+- Install yarn on your machine
+- From the root of this directory, run `yarn install`
+- Download [postgres](https://www.postgresql.org/download/) and install WITH pgadmin.
+- Create a server in pgadmin called tutorrow
+- Create a database in pgadmin called tutorrow
+- Highlight the tutorrow Database, and go to Tools -> Restore
+- Navigate to schema.sql and restore using that file
+- From the root, run `yarn start-dev`
 - Go to `localhost:8080` in web browser
+
+![SSS1](https://github.com/jhyman2/TutorRow/blob/master/schema.png?raw=true)
