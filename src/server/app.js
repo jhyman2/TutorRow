@@ -7,7 +7,7 @@ import bodyParser   from 'body-parser';
 import http         from 'http';
 import path         from 'path';
 import passport     from 'passport';
-import pg           from 'pg';
+import { Pool }     from 'pg';
 
 // routes
 import HomeRoute    from './routes/home';
@@ -29,13 +29,17 @@ import UpdateUserWithUni      from './routes/users/update_with_uni';
 import GetStudentsForCourse from './routes/users/get_students_for_course';
 import GetTutorsForCourse   from './routes/users/get_tutors_for_course';
 
+process.env.PGDATABASE = 'tutorrow';
+process.env.PGHOST     = 'localhost';
+process.env.PGUSER     = 'postgres';
+
 // db, app, and server listening setup
 const app              = express();
 const server           = http.Server(app);
 const FacebookStrategy = require('passport-facebook').Strategy;
 const connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/tutorrow';
 const auth             = require('./auth.js');
-const pool             = new pg.Pool()
+const pool             = new Pool();
 
 app.set('view engine', 'ejs');
 app.use(express.static(path.join(__dirname, '../../dist')));
@@ -67,8 +71,7 @@ passport.deserializeUser((id, done) => {
   done(null, id);
 });
 
-pg.connect(connectionString, (err, client, done) => {
-
+pool.connect((err, client, done) => {
   passport.use(new FacebookStrategy({
     // pull in our app id and secret from our auth.js file
     clientID        : auth.facebookAuth.clientID,
