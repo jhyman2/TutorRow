@@ -1,18 +1,23 @@
-import React, { Component } from 'react';
-import axios from 'axios';
+import React from 'react';
 
 // import homeIcon from './../../images/main_page.jpg';
 
-export default class App extends Component {
+const styles = {
+  wrapper: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+};
 
-  render() {
-    return (
-      <div>
-        <h1>Welcome to TutorRow</h1>
-        <p>Login or Register with:</p>
-
-        <a href="/auth/facebook">Facebook</a>
-      </div>
-    );
-  }
+function Login() {
+  return (
+    <div style={styles.wrapper}>
+      <h1>Welcome to TutorRow</h1>
+      <p>Login or Register with:</p>
+      <a href="/auth/facebook">Facebook</a>
+    </div>
+  );
 }
+
+export default Login;

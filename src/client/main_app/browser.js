@@ -3,6 +3,7 @@ import { render }                       from 'react-dom';
 import { Provider }                     from 'react-redux';
 import createSagaMiddleware             from 'redux-saga';
 import { createStore, applyMiddleware } from 'redux';
+import { composeWithDevTools }          from 'redux-devtools-extension';
 
 import reducers from './reducers';
 import sagas    from './sagas';
@@ -15,7 +16,7 @@ const sagaMiddleware = createSagaMiddleware()
 let store = createStore(
   reducers,
   window.__APP_INITIAL_STATE__,
-  applyMiddleware(sagaMiddleware)
+  composeWithDevTools(applyMiddleware(sagaMiddleware)),
 );
 
 sagaMiddleware.run(sagas);

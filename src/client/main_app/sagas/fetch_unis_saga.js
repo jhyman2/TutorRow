@@ -18,7 +18,7 @@ function* fetchUnis() {
 }
 
 function* fetch_unis_saga() {
-  yield takeEvery("UNI_FETCH_REQUESTED", fetchUnis);
+  yield takeLatest("UNI_FETCH_REQUESTED", fetchUnis);
 }
 
 export default fetch_unis_saga;
