@@ -4,6 +4,7 @@ import express      from 'express';
 import cookieParser from 'cookie-parser';
 import session      from 'express-session';
 import bodyParser   from 'body-parser';
+import log          from 'loglevel';
 import http         from 'http';
 import path         from 'path';
 import passport     from 'passport';
@@ -19,7 +20,7 @@ import GetCoursesByUni from './routes/courses/get_courses_by_uni';
 import GetCourseById   from './routes/courses/get_course_by_id'
 
 import PostCourseSignUpAsTutor   from './routes/courses/post_course_sign_up_as_tutor';
-import PostCourseSignUpAsStudent from './routes/courses/post_course_sign_up_as_tutor';
+import PostCourseSignUpAsStudent from './routes/courses/post_course_sign_up_as_student';
 import CoursesCancelTutoring     from './routes/courses/course_cancel_tutoring';
 import CoursesCancelStudenting   from './routes/courses/course_cancel_studenting';
 
@@ -29,15 +30,18 @@ import UpdateUserWithUni      from './routes/users/update_with_uni';
 import GetStudentsForCourse from './routes/users/get_students_for_course';
 import GetTutorsForCourse   from './routes/users/get_tutors_for_course';
 
+import GraphQL from './graphql/';
+
 process.env.PGDATABASE = 'tutorrow';
 process.env.PGHOST     = 'localhost';
 process.env.PGUSER     = 'postgres';
+
+log.setLevel('debug', true);
 
 // db, app, and server listening setup
 const app              = express();
 const server           = http.Server(app);
 const FacebookStrategy = require('passport-facebook').Strategy;
-const connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/tutorrow';
 const auth             = require('./auth.js');
 const pool             = new Pool();
 
@@ -72,6 +76,9 @@ passport.deserializeUser((id, done) => {
 });
 
 pool.connect((err, client, done) => {
+  // send the mongo client to the GraphQL server
+  const graphQLServer = new GraphQL(client);
+
   passport.use(new FacebookStrategy({
     // pull in our app id and secret from our auth.js file
     clientID        : auth.facebookAuth.clientID,
@@ -165,5 +172,10 @@ pool.connect((err, client, done) => {
 });
 
 server.listen(8080);
+
+process.on('exit', (code) => {
+  console.log(`About to exit with code: ${code}`);
+  // todo: maybe do graphQLServer.close()
+});
 
 module.exports = app;
