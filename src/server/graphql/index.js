@@ -25,15 +25,13 @@ class GraphQL {
 
     const resolvers = {
       Query: {
-        student: (obj, args) => {
-          return new Promise((resolve, reject) => {
-            client.query(`SELECT * FROM users WHERE id=$1`, [args.id], (err, results) => {
-              if (err) {
-                reject(err);
-              }
-              resolve(results.rows);
-            });
-          });
+        student: async (obj, args) => {
+          try {
+            const results = await client.query(`SELECT * FROM users WHERE id=$1`, [args.id]);
+            return results.rows;
+          } catch (e) {
+            log.debug('Error resolving student', e);
+          }
         },
       },
     };

@@ -1,4 +1,4 @@
 /* APPLICATION ENTRY */
-
-require('babel-core/register');
+require('@babel/register');
+require('regenerator-runtime/runtime');
 require('./src/server/app.js');
