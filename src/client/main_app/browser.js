@@ -9,7 +9,7 @@ import reducers from './reducers';
 import sagas    from './sagas';
 
 // main app view starting point
-import App from './index';
+import App from './index.tsx';
 
 const sagaMiddleware = createSagaMiddleware()
 

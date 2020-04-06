@@ -1,33 +1,30 @@
 // Users
-{
-	_id: ObjectID,
-	username: String,
-	password: String,
-	firstName: String,
-	lastName: String,
-	university: University_ID,
-	classes: [ { class_id, role } ]
+type User = {
+	_id: Number
+	username: String
+	password: String
+	firstName: String
+	lastName: String
+	university: Number
+	// classes: [ { class_id, role } ]
 }
 
-// Classes
-{
-	_id: ObjectID,
-	name: String,
-	num: int,
-	dept: String,
-	teacher: String,
-	description: String,
-	credits: int,
+type Class = {
+	_id: Number
+	name: String
+	num: Number
+	dept: String
+	teacher: String
+	description: String
+	credits: Number
 	prereqs: String
 }
 
-// Universities
-{
-	_id: ObjectID,
-	name: String,
-	classes: classTableID
+type University = {
+	_id: Number
+	name: String
+	classes: [Number]
 }
-
 
 // app.post('/login', (req, res) => {
 //   var username = req.body.user_name;

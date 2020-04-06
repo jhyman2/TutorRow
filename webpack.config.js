@@ -6,12 +6,9 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
-        exclude: /node_modules/,
-        loader: 'babel-loader',
-        query: {
-          presets: ['@babel/preset-react', '@babel/preset-env']
-        }
+        test: /\.(ts|js)x?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/
       },
       {
         test: /\.css$/,
@@ -29,9 +26,7 @@ module.exports = {
     ]
   },
   resolveLoader: {
-    modules: [
-        './node_modules'
-    ]
+    modules: ['./node_modules']
   },
   output: {
     path: __dirname + '/dist',

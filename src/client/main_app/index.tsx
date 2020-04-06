@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Loading   from './components/loading';
 import SelectUni from './components/selectUni';
@@ -7,62 +7,70 @@ import Dashboard from './components/dashboard';
 
 import { updateUserWithUni, fetchUnis } from './actions';
 
-class Main_App extends Component {
-
-  componentWillMount() {
-    // fetch universities if user does not have a university
-    if (!this.props.user.university_id) {
-      this.props.fetchUnis();
-    }
-  }
-
-  render() {
-    let toDisplay;
-
-    if (this.props.loading) {
-      toDisplay = <Loading />;
-    } else if (this.props.user && !this.props.user.university_id) {
-      toDisplay = <SelectUni
-                    user={this.props.user}
-                    unis={this.props.universities}
-                    updateUserWithUni={this.props.updateUserWithUni}
-                  />;
-    } else if (!this.props.user) {
-      toDisplay = <p>Please go back and log in until we figure out how to store cookies</p>
-    } else {
-      toDisplay = <Dashboard />
-    }
-
-    return (
-      <div>
-        {toDisplay}
-      </div>
-    );
-  }
+type University = {
+  id: Number
+  name: String
 }
 
-const mapStateToProps = (state) => {
-  return {
+type User = {
+  university_id: Number
+}
+
+interface Root_State {
+  loading: Boolean
+  fetchUnis: Function
+  user: User
+  universities: [University]
+  updateUserWithUni: Function
+}
+
+interface Main_App_Props {
+  loading: Boolean
+  fetchUnis: Function
+  user: User
+  universities: [University]
+  updateUserWithUni: Function
+}
+
+const Main_App = (props:Main_App_Props) => {
+  const {
+    loading,
+    user,
+    universities,
+  } = useSelector((state: Root_State) => ({
+    loading: state.loading,
     user: state.user,
     universities: state.universities,
-    loading: state.loading
-  }
-}
+  }));
+  const dispatch = useDispatch();
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchUnis () {
+  useEffect(() => {
+    if (!user.university_id) {
       dispatch(fetchUnis());
-    },
-    updateUserWithUni (user_id, university_id) {
-      dispatch(updateUserWithUni(user_id, university_id));
     }
+  });
+
+  if (loading) {
+    return <Loading />;
   }
-}
 
-const test_app = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Main_App)
+  if (user && !user.university_id) {
+    return (
+      <SelectUni
+        user={user}
+        unis={universities}
+        updateUserWithUni={(id: number, university_id: number) => {
+          dispatch(updateUserWithUni(id, university_id));
+        }}
+      />
+    );
+  }
 
-export default test_app;
+  if (!user) {
+    return <p>Please go back and log in until we figure out how to store cookies</p>;
+  }
+
+  return <Dashboard />;
+};
+
+export default Main_App;
