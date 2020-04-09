@@ -11,8 +11,19 @@ class GraphQL {
 
       type Student {
         id: Int
-        university: [University]
+        university: University
         full_name: String
+        courses: [Course]
+      }
+
+      type Course {
+        id: Int
+        name: String
+        department: String
+        professor: String
+        description: String
+        num_credits: Int
+        university_id: Int
       }
 
       # The "Query" type is special: it lists all of the available queries that
@@ -33,7 +44,23 @@ class GraphQL {
             log.debug('Error resolving student', e);
           }
         },
-      },
+      }, 
+      Student: {
+        courses: async (student) => {
+          try {
+            const results = await client.query(`
+              SELECT *
+                  FROM course_instances
+                  JOIN courses
+                    ON course_instances.course_id=courses.id
+                  WHERE student_id=$1`, [student.id]);
+            return results.rows;
+          }
+          catch (e) {
+            log.debug('Error resolving courses', e);
+          }
+        }
+      }
     };
 
     const server = new ApolloServer({ typeDefs, resolvers });
