@@ -13,6 +13,7 @@ import { Pool }     from 'pg';
 // routes
 import HomeRoute    from './routes/home';
 import MainAppRoute from './routes/main_app';
+import PGNotRunning from './routes/pg_not_running';
 
 import GetUnisRoute from './routes/universities/get_unis';
 
@@ -105,6 +106,12 @@ pool.connect((err, client, done) => {
   /*
    * VIEWS ROUTES
    */
+
+  // Make sure Postgres is running, serve 500 error if it isn't
+  if (!client) {
+    app.get('/', PGNotRunning());
+    return;
+  }
 
   // Getting the Login screen
   app.get('/', HomeRoute(client));
