@@ -31,6 +31,7 @@ class GraphQL {
       # case, the "books" query returns an array of zero or more Books (defined above).
       type Query {
         student(id: Int): [Student]
+        universities: [University]
       }
     `; 
 
@@ -44,6 +45,14 @@ class GraphQL {
             log.debug('Error resolving student', e);
           }
         },
+        universities: async (obj, args) => {
+          try {
+            const results = await client.query(`SELECT * FROM universities`);
+            return results.rows;
+          } catch (e) {
+            log.debug(`Error resolving universities`, e);
+          }
+        }
       }, 
       Student: {
         courses: async (student) => {

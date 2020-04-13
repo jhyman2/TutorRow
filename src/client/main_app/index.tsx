@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import { useQuery } from '@apollo/react-hooks';
+import { gql } from 'apollo-boost';
 
 import Loading   from './components/loading';
 import SelectUni from './components/selectUni';
@@ -32,23 +34,19 @@ interface Main_App_Props {
   updateUserWithUni: Function
 }
 
-const Main_App = (props:Main_App_Props) => {
-  const {
-    loading,
-    user,
-    universities,
-  } = useSelector((state: Root_State) => ({
-    loading: state.loading,
-    user: state.user,
-    universities: state.universities,
-  }));
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (!user.university_id) {
-      dispatch(fetchUnis());
+const UNIVERSITIES = gql`
+  {
+    universities {
+      name
+      id
     }
-  });
+  }
+`;
+
+const Main_App = (props:Main_App_Props) => {
+  const { user } = useSelector((state: Root_State) => ({ user: state.user }));
+  const { loading, error, data } = useQuery(UNIVERSITIES);
+  const dispatch = useDispatch();
 
   if (loading) {
     return <Loading />;
@@ -58,7 +56,7 @@ const Main_App = (props:Main_App_Props) => {
     return (
       <SelectUni
         user={user}
-        unis={universities}
+        unis={data.universities}
         updateUserWithUni={(id: number, university_id: number) => {
           dispatch(updateUserWithUni(id, university_id));
         }}
