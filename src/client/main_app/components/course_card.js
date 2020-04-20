@@ -1,40 +1,18 @@
 import React from 'react';
 
-const styles = {
-  courseContainer: {
-    display: 'inline-block',
-    padding: '10px',
-    margin: '10px',
-    border: '1px solid lightgrey',
-  },
-  courseDescription: {
-    display: 'block',
-    marginLeft: '20px',
-  },
-  courseTitle: {
-    margin: '0 0 10px 0', 
-  },
-}
-
 function Course_Card ({ course, select }) {
   return (
-    <div
-      key={`${course.department}_${course.course_num}`}
-      style={styles.courseContainer}
-      onClick={() => select(course.id)}
-    >
-      <p style={styles.courseTitle}>
-        {course.department} {course.course_num} - {course.name}
-      </p>
-      <span style={styles.courseDescription}>
-        Number of credits: {course.num_credits}
-      </span>
-      <span style={styles.courseDescription}>
-        Professor: {course.professor}
-      </span>
-      <p>
-        Course summary: {course.description}
-      </p>
+    <div className="max-w-sm rounded overflow-hidden shadow-lg" onClick={() => select(course.id)}>
+      <div className="px-6 py-4">
+        <div className="font-bold text-xl mb-2">
+          {`${course.department} ${course.course_num} - ${course.name}`}
+        </div>
+        <div className="text-gray-700 text-base">
+          <p>{course.description}</p>
+          <p>{course.num_credits} credits</p>
+          <p className="text-gray-900 leading-none">{course.professor}</p>
+        </div>
+      </div>
     </div>
   );
 }

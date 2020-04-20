@@ -12,6 +12,7 @@ import sagas    from './sagas';
 
 // main app view starting point
 import App from './index.tsx';
+import './app.css';
 
 const client = new ApolloClient({
   uri: 'http://localhost:4000',
