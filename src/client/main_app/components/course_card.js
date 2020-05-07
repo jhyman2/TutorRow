@@ -1,6 +1,46 @@
 import React from 'react';
+import studentImg from '../../zondicons/user.svg';
+import tutorImg from '../../zondicons/badge.svg';
 
-function Course_Card ({ course, select }) {
+function Course_Card ({
+  allowStudentSignup = false,
+  allowStudentRemoveSignup = false,
+  allowTutorSignup = false,
+  allowTutorRemoveSignup = false,
+  course,
+  onStudentAction,
+  onTutorAction,
+  select = () => {},
+  showStudents = false,
+  showTutors = false,
+  students = [],
+  tutors = [],
+}) {
+
+  const Students = () => {
+    if (!students.length) {
+      return <p>No students signed up</p>;
+    }
+
+    return students.map(student => (
+      <p key={student.student_id || student.id}>
+        {student.full_name}
+      </p>
+    ));
+  };
+
+  const Tutors = () => {
+    if (!tutors.length) {
+      return <p>No tutors signed up</p>;
+    }
+
+    return tutors.map(tutor => (
+      <p key={tutor.student_id || tutor.id}>
+        {tutor.full_name}
+      </p>
+    ));
+  }
+
   return (
     <div className="max-w-sm rounded overflow-hidden shadow-lg" onClick={() => select(course.id)}>
       <div className="px-6 py-4">
@@ -13,6 +53,36 @@ function Course_Card ({ course, select }) {
           <p className="text-gray-900 leading-none">{course.professor}</p>
         </div>
       </div>
+      {showTutors && (
+        <div className="flex flex-row items-center px-6 py-1">
+          <img className="h-4 w-4" src={tutorImg} />
+          <Tutors />
+          {(allowTutorSignup || allowTutorRemoveSignup) && (
+            <button
+              className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow ml-auto"
+              onClick={onTutorAction}
+            >
+              {allowTutorSignup && 'Sign up to tutor!'}
+              {allowTutorRemoveSignup && 'I dont want to tutor'}
+            </button>
+          )}
+        </div>
+      )}
+      {showStudents && (
+        <div className="flex flex-row items-center px-6 py-1">
+          <img className="h-4 w-4" src={studentImg} />
+          <Students />
+          {(allowStudentSignup || allowStudentRemoveSignup) && (
+            <button
+              className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow ml-auto"
+              onClick={onStudentAction}
+            >
+              {allowStudentSignup && 'Tutor me!'}
+              {allowStudentRemoveSignup && 'I dont need tutoring'}
+            </button>
+          )}
+        </div>
+      )}
     </div>
   );
 }

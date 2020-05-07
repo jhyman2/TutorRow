@@ -1,120 +1,67 @@
-import React, { Component } from 'react';
-import { connect }          from 'react-redux'
-
-// actions
-import {
-  fetchStudentsForCourse, fetchTutorsForCourse,
-  cancelStudenting, cancelTutoring,
-  signUpStudenting, signUpTutoring
-} from '../actions/';
-
-// components
+import React from 'react';
+import { connect } from 'react-redux'
+import { useQuery, useMutation } from '@apollo/react-hooks';
 import Course_Card from './course_card';
 
-class Selected_Course_Component extends Component {
+import signupForCourse from '../graphql/mutations/signupForCourse.ts';
+import dropCourse from '../graphql/mutations/dropCourse.ts';
+import getCourseData from '../graphql/queries/getCourseData.ts';
 
-  componentWillMount() {
-    this.props.fetchStudentsForCourse(this.props.selected_course.id);
-    this.props.fetchTutorsForCourse(this.props.selected_course.id);
+const Selected_Course = ({ selected_course, user }) => {
+  const { loading, error, data } = useQuery(getCourseData, { variables: { id: selected_course.id }});
+  const [cancelCourse] = useMutation(dropCourse, { variables: { id: selected_course.id }});
+  const [signupCourse] = useMutation(signupForCourse, { variables: { id: selected_course.id }});
+
+  if (loading) {
+    return <div>loading...</div>;
   }
 
-  prepareTutors (tutors) {
-    let ui_tutors = [];
-
-    tutors.forEach((tutor) => {
-      ui_tutors.push(<p key={tutor.student_id || tutor.id}>{tutor.full_name}</p>);
-    });
-
-    return ui_tutors;
+  if (error) {
+    return <div>error</div>;
   }
 
-  prepareStudents (students) {
-    const ui_students = [];
+  const { course } = data;
 
-    students.forEach((student) => {
-      ui_students.push(<p key={student.student_id || student.id}>{student.full_name}</p>);
-    });
+  const studentIsTakingClass = course.students.find(student => student.id === user.id);
+  const studentIsTutoringClass = course.tutors.find(tutor => tutor.id === user.id);
 
-    return ui_students;
-  }
-
-  prepareSignUps (user, students, tutors, course) {
-    function containsUser (item) {
-      return item.student_id === user.id;
-    }
-
-    const { selected_course } = this.props;
-
-    if (students.find(containsUser)) {
-      return <button onClick={this.props.cancelStudenting.bind(this, user, selected_course)}>I no longer need help this class</button>
-    } else if (tutors.find(containsUser)) {
-      return <button onClick={this.props.cancelTutoring.bind(this, user, selected_course)}>I no longer want to tutor this class</button>
-    } else {
-      return (
-        <div className="buttons-signup">
-          <button onClick={this.props.signUpStudenting.bind(this, user, selected_course)}>I need help in this class</button>
-          <button onClick={this.props.signUpTutoring.bind(this, user, selected_course)}>I want to tutor this class</button>
-        </div>
-      );
-    }
-  }
-
-  render() {
-    const { user, selected_course, tutors, students } = this.props;
-
-    return (
-      <div>
-        <Course_Card course={selected_course} />
-        <p>Available tutors:</p>
-        {this.prepareTutors(tutors)}
-        <p>Students wanting to learn:</p>
-        {this.prepareStudents(students)}
-        {this.prepareSignUps(user, students, tutors, selected_course)}
-      </div>
-    );
-  }
+  return (
+    <div className="mx-auto flex-col container justify-center h-screen flex items-center p-5">
+      <Course_Card
+        allowStudentRemoveSignup={studentIsTakingClass}
+        allowStudentSignup={!studentIsTakingClass && !studentIsTutoringClass}
+        allowTutorRemoveSignup={studentIsTutoringClass}
+        allowTutorSignup={!studentIsTutoringClass && !studentIsTakingClass}
+        course={course}
+        onStudentAction={() => {
+          if (studentIsTakingClass) {
+            return cancelCourse();
+          }
+          signupCourse({ variables: { role: 'student' }});
+        }}
+        onTutorAction={() => {
+          if (studentIsTutoringClass) {
+            return cancelCourse();
+          }
+          signupCourse({ variables: { role: 'tutor' }});
+        }}
+        showStudents
+        showTutors
+        students={course.students}
+        tutors={course.tutors}
+      />
+    </div>
+  );
 }
 
-const mapStateToProps = (state) => {
-  return {
-    user: state.user,
-    loading: state.loading,
-    selected_course: state.selected_course,
-    students: state.students,
-    tutors: state.tutors
-  }
-}
+const mapStateToProps = (state) => ({
+  user: state.user,
+  selected_course: state.selected_course,
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchStudentsForCourse (course_id) {
-      dispatch(fetchStudentsForCourse(course_id));
-    },
-    fetchTutorsForCourse (course_id) {
-      dispatch(fetchTutorsForCourse(course_id));
-    },
-    cancelStudenting (user, selected_course) {
-      dispatch(cancelStudenting(user, selected_course.id));
-    },
-    cancelTutoring (user, selected_course) {
-      dispatch(cancelTutoring(user, selected_course.id));
-    },
-    signUpStudenting (user, selected_course) {
-      dispatch(signUpStudenting(user, selected_course.id));
-    },
-    signUpTutoring (user, selected_course) {
-      dispatch(signUpTutoring(user, selected_course.id));
-    }
-  }
-}
+const Connected_Selected_Course = connect(mapStateToProps)(Selected_Course);
 
-const selected_course = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Selected_Course_Component)
-
-export default selected_course;
-
+export default Connected_Selected_Course;
 
 /**
  * @todo

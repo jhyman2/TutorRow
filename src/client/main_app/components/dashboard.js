@@ -1,75 +1,48 @@
-import React, { Component } from 'react';
-import { connect }          from 'react-redux'
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { useQuery } from '@apollo/react-hooks';
 
 import Loading from './loading';
 import Course_Card     from './course_card';
 import Selected_Course from './selected_course';
 
-import { fetchSelectedCourse, fetchCoursesForUni } from '../actions/';
+import { fetchSelectedCourse } from '../actions/';
 
-class DashboardComponent extends Component {
+import getUniversityCourses from '../graphql/queries/getUniversityCourses.ts';
 
-  componentWillMount() {
-    if (this.props.uni_courses && !this.props.uni_courses.length) {
-      this.props.fetchCoursesForUni(this.props.user.university_id);
-    }
-  }
-
-  openCourseInfo (course_id) {
-    this.props.fetchSelectedCourse(this.props.user.university_name.trim(), course_id);
-  }
-
-  prepareCourses (courses) {
-    return courses.map((course) => {
-      return <Course_Card key={course.id} course={course} select={this.openCourseInfo.bind(this)} />
-    });
-  }
-
-  render() {
-    let toDisplay;
-
-    if (this.props.loading) {
-      toDisplay = <Loading />;
-    } else if (this.props.selected_course) {
-      toDisplay = <Selected_Course />;
-    } else {
-      toDisplay = <div>
-                    <p>All courses at {this.props.user.university_name}:</p>
-                    {this.prepareCourses(this.props.uni_courses)}
-                  </div>
-    }
-
-    return (
-      <div>
-        {toDisplay}
-      </div>
-    );
-  }
-}
-
-const mapStateToProps = (state) => {
-  return {
+export default function DashboardComponent() {
+  const {
+    selected_course,
+    user,
+  } = useSelector(state => ({
     user: state.user,
-    loading: state.loading,
-    uni_courses: state.uni_courses,
-    selected_course: state.selected_course
+    selected_course: state.selected_course,
+  }));
+  const dispatch = useDispatch();
+  const { loading, error, data } = useQuery(getUniversityCourses, { variables: { id: user.university_id }});
+
+  if (loading) {
+    return <Loading />;
   }
-}
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchCoursesForUni (university_id) {
-      dispatch(fetchCoursesForUni(university_id));
-    },
-    fetchSelectedCourse (university_name, course_id) {
-      dispatch(fetchSelectedCourse(university_name, course_id));
-    }
+  if (error) {
+    return <div>An error has occurred: {error}</div>;
   }
+
+  if (selected_course) {
+    return <Selected_Course />;
+  }
+
+  return (
+    <div>
+      <p>All courses at {user.university_name}:</p>
+      {data.university.courses.map((course) => (
+        <Course_Card
+          key={course.id}
+          course={course}
+          select={course_id => dispatch(fetchSelectedCourse(user.university_name.trim(), course_id))}
+        />
+      ))}
+    </div>
+  );
 }
-
-const dashboard = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(DashboardComponent)
-
-export default dashboard;

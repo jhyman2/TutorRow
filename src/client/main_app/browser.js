@@ -6,6 +6,7 @@ import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools }          from 'redux-devtools-extension';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
+import { InMemoryCache } from 'apollo-cache-inmemory';
 
 import reducers from './reducers';
 import sagas    from './sagas';
@@ -14,9 +15,16 @@ import sagas    from './sagas';
 import App from './index.tsx';
 import './app.css';
 
+const cache =  new InMemoryCache();
 const client = new ApolloClient({
+  cache,
   uri: 'http://localhost:4000',
+  headers: {
+    authorization: window.__APP_INITIAL_STATE__.user.id,
+  }, 
 });
+
+cache.writeData({ data: window.__APP_INITIAL_STATE__ });
 
 const sagaMiddleware = createSagaMiddleware()
 

@@ -8,7 +8,7 @@ export default function (client) {
   return (req, res) => {
     client.query('SELECT * FROM users;', (err, result) => {
       const users        = result.rows;
-      const initialState = { users };
+      const initialState = { user: users[0] };
       const appString    = renderToString(<Login {...initialState} />);
 
       res.send(LoginTemplate({
