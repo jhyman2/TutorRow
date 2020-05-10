@@ -67,6 +67,8 @@ const selected_course = (state = null, action) => {
       return action.course;
     case 'FETCH_SELECTED_COURSE_FAILED':
       return {err: 'error fetching course'};
+    case 'SELECTED_COURSE_RESET':
+      return null;
     default:
       return state;
   }

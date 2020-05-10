@@ -9,14 +9,14 @@ export default function (client) {
         client.query('SELECT * FROM universities WHERE id=$1;', [user.university_id], (err, result) => {
           user.university_name = result.rows[0].name;
 
-          const initialState = { user };
+          const initialState = { user: { ...user, __typename: 'Student' }};
           res.send(MainAppTemplate({
             title: 'Main App',
             initialState: JSON.stringify(initialState)
           }));
         });
       } else {
-        const initialState = { user };
+        const initialState = { user: { ...user, __typename: 'Student' }};
         res.send(MainAppTemplate({
           title: 'Main App',
           initialState: JSON.stringify(initialState)

@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-const getUniversityCourses = gql`
+const GET_UNIVERSITY_COURSES = gql`
   query getUniversityCourses($id: Int!) {
     university(id: $id) {
       name
@@ -19,4 +19,4 @@ const getUniversityCourses = gql`
   }
 `;
 
-export default getUniversityCourses;
+export default GET_UNIVERSITY_COURSES;

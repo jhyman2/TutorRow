@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-const signupForCourse = gql`
+const SIGNUP_FOR_COURSE = gql`
   mutation signupForCourse($id: Int!, $role: String!) {
     signupForCourse(id: $id, role: $role) {
       id
@@ -23,4 +23,4 @@ const signupForCourse = gql`
   }
 `;
 
-export default signupForCourse;
+export default SIGNUP_FOR_COURSE;

@@ -1,30 +1,48 @@
-import React, { Component } from 'react';
+import React, { useRef } from 'react';
+import { useMutation, useQuery } from '@apollo/react-hooks';
+import GET_UNIVERSITIES from '../graphql/queries/getUniversities.ts';
+import ENROLL_STUDENT_IN_UNIVERSITY from '../graphql/mutations/enrollStudentInUniversity.ts';
+import Loading from '../components/loading';
 
-export default class SelectUni extends Component {
+const SelectUni = ({ user }) => {
+  const selectRef = useRef(null);
+  const { loading, error, data } = useQuery(GET_UNIVERSITIES);
+  const [enrollStudentInUniversity] = useMutation(ENROLL_STUDENT_IN_UNIVERSITY);
 
-  updateUserWithUni () {
-    const selectBox     = this.refs.uni_select_box;
-    const university_id = selectBox[selectBox.selectedIndex].value
-
-    this.props.updateUserWithUni(this.props.user.id, university_id);
+  if (loading) {
+    return <Loading />;
   }
 
-  prepareUnis () {
-    return this.props.unis.map((uni) => {
-      return <option key={`${uni.id}`} value={`${uni.id}`}>{uni.name}</option>
-    });
+  if (error) {
+    return <div>error</div>;
   }
 
-  render() {
-    return (
-      <div>
-        <p>Welcome to Tutorrow, {this.props.user.full_name}!</p>
-        <p>Please select the university that you belong to:</p>
-        <select ref="uni_select_box">
-          {this.prepareUnis()}
-        </select>
-        <button onClick={(e) => this.updateUserWithUni()}>Go!</button>
+  return (
+    <div className="mx-auto container justify-center h-screen flex items-center">
+      <div className="mx-auto max-w-m mx-auto flex-col p-6 bg-white rounded-lg shadow-xl">
+        <h1 className="text-center text-2xl mb-4">Welcome to TutorRow, {user.full_name}</h1>
+        <p className="text-center">Please select your university</p>
+        <div className="text-center">
+          <select ref={selectRef} className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+            {data.universities.map(uni => (
+              <option key={`${uni.id}`} value={`${uni.id}`}>
+                {uni.name}
+              </option>
+            ))}
+          </select>
+          <button
+            className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow ml-auto my-1"
+            onClick={() => {
+              const university_id = selectRef.current[selectRef.current.selectedIndex].value;
+              enrollStudentInUniversity({ variables: { id: parseInt(university_id) }});
+            }}
+          >
+            Go!
+          </button>
+        </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
+
+export default SelectUni;

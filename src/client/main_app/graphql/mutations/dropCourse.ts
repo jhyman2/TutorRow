@@ -1,6 +1,6 @@
 import gql from 'graphql-tag';
 
-const dropCourse = gql`
+const DROP_COURSE = gql`
   mutation dropCourse($id: Int!) {
     dropCourse(id: $id) {
       id
@@ -23,4 +23,4 @@ const dropCourse = gql`
   }
 `;
 
-export default dropCourse;
+export default DROP_COURSE;

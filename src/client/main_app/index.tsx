@@ -1,74 +1,41 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
+// @ts-ignore
+import GET_USER from './graphql/queries/getUser.ts';
+// @ts-ignore
+import userQueryVariables from './graphql/userQueryVariables.ts';
 
-import Loading   from './components/loading';
 import SelectUni from './components/selectUni';
 import Dashboard from './components/dashboard';
+import Loading from './components/loading';
 
-import { updateUserWithUni, fetchUnis } from './actions';
+// @ts-ignore
+import UserContext from './contexts/user.ts';
 
-type University = {
-  id: Number
-  name: String
-}
-
-type User = {
-  university_id: Number
-}
-
-interface Root_State {
-  loading: Boolean
-  fetchUnis: Function
-  user: User
-  universities: [University]
-  updateUserWithUni: Function
-}
-
-interface Main_App_Props {
-  loading: Boolean
-  fetchUnis: Function
-  user: User
-  universities: [University]
-  updateUserWithUni: Function
-}
-
-const UNIVERSITIES = gql`
-  {
-    universities {
-      name
-      id
-    }
-  }
-`;
-
-const Main_App = (props:Main_App_Props) => {
-  const { user } = useSelector((state: Root_State) => ({ user: state.user }));
-  const { loading, error, data } = useQuery(UNIVERSITIES);
-  const dispatch = useDispatch();
+const Main_App = () => {
+  const { loading, error, data } = useQuery(GET_USER, userQueryVariables);
 
   if (loading) {
     return <Loading />;
   }
 
-  if (user && !user.university_id) {
-    return (
-      <SelectUni
-        user={user}
-        unis={data.universities}
-        updateUserWithUni={(id: number, university_id: number) => {
-          dispatch(updateUserWithUni(id, university_id));
-        }}
-      />
-    );
+  if (error) {
+    return <div>error</div>;
   }
 
-  if (!user) {
+  if (data.student && !data.student.university) {
+    return <SelectUni user={data.student} />;
+  }
+
+  if (!data.student) {
     return <p>Please go back and log in until we figure out how to store cookies</p>;
   }
 
-  return <Dashboard />;
+  return (
+    <UserContext.Provider value={data.student}>
+      <Dashboard />
+    </UserContext.Provider>
+  );
 };
 
 export default Main_App;

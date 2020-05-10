@@ -17,7 +17,7 @@ class GraphQL {
         student: async (obj, args) => {
           try {
             const results = await client.query(`SELECT * FROM users WHERE id=$1`, [args.id]);
-            return results.rows;
+            return results.rows[0];
           } catch (e) {
             log.debug('Error resolving student', e);
           }
@@ -123,6 +123,40 @@ class GraphQL {
         },
       },
       Mutation: {
+        enrollStudentInUniversity: async (obj, args, context) => {
+          try {
+            const result = await client.query(`
+              UPDATE
+                users
+                SET university_id=$1
+                  WHERE id=$2
+              `,
+              [args.id, context.user.id]
+            );
+            if (!result.rowCount) {
+              throw new UserInputError('Enrolling unsuccessful');
+            }
+
+            const users = await client.query(`
+              SELECT a.id, a.university_id, a.full_name, b.name as university_name, b.id as university_id
+                FROM users a
+                  INNER JOIN universities b on a.university_id = b.id
+                  WHERE a.id=$1;
+              `,
+              [context.user.id],
+            );
+            const [user] = users.rows;
+            return {
+              ...user,
+              university: {
+                id: user.university_id,
+                name: user.university_name,
+              },
+            };
+          } catch (e) {
+            log.debug('Error enrolling in university', e);
+          }
+        },
         dropCourse: async (obj, args, context) => {
           try {
             const result = await client.query(`
