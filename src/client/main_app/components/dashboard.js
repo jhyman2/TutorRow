@@ -6,18 +6,14 @@ import Loading         from './loading';
 import Course_Card     from './course_card';
 import Selected_Course from './selected_course';
 
-import UserContext from '../contexts/user.ts';
 import { fetchSelectedCourse } from '../actions/';
 
-import getUniversityCourses from '../graphql/queries/getUniversityCourses.ts';
+import GET_UNIVERSITY_COURSES from '../graphql/queries/getUniversityCourses.ts';
 
 export default function DashboardComponent() {
   const selected_course = useSelector(state => state.selected_course);
   const dispatch = useDispatch();
-  const user = useContext(UserContext);
-  const { loading, error, data } = useQuery(getUniversityCourses, {
-    variables: { id: user.university.id },
-  });
+  const { loading, error, data } = useQuery(GET_UNIVERSITY_COURSES);
 
   if (loading) {
     return <Loading />;
@@ -28,7 +24,7 @@ export default function DashboardComponent() {
   }
 
   if (selected_course) {
-    return <Selected_Course />;
+    return <Selected_Course user={data.user} />;
   }
 
   return (
@@ -36,18 +32,29 @@ export default function DashboardComponent() {
       <p className="ml-8">TutorRow Dashboard</p>
       <div className="flex flex-row mx-auto container justify-around h-screen pt-8">
         <div>
-          <p>All courses at {user.university.name}:</p>
-          {data.university.courses.map((course) => (
+          <p>All courses at {data.user.university.name}:</p>
+          {data.user.university.courses.map((course) => (
             <Course_Card
               key={course.id}
               course={course}
-              select={course_id => dispatch(fetchSelectedCourse(user.university.name, course_id))}
+              select={course_id => dispatch(fetchSelectedCourse(data.user.university.name, course_id))}
             />
           ))}
         </div>
         <div>
           <p>My courses that I am enrolled in:</p>
-          <div className="pt-8">todo: build this part</div>
+          <div className="pt-8">
+            <p>Courses I am Tutoring</p>
+            {data.user.coursesTutoring.map(({ course_num, department, id, name}) => (
+              <p className="pl-8" key={id}>{`${department} ${course_num} -- ${name}`}</p>
+            ))}
+          </div>
+          <div className="pt-8">
+            <p>Courses I am Studenting</p>
+            {data.user.coursesStudenting.map(({ course_num, department, id, name}) => (
+              <p className="pl-8" key={id}>{`${department} ${course_num} -- ${name}`}</p>
+            ))}
+          </div>
         </div>
       </div>
     </div>

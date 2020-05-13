@@ -13,7 +13,7 @@ export default function (client) {
 
       res.send(LoginTemplate({
         body: appString,
-        title: 'Hello World from the server',
+        title: 'TutorRow',
         initialState: JSON.stringify(initialState)
       }));
     });

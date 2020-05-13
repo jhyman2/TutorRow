@@ -29,11 +29,9 @@ const client = new ApolloClient({
   cache,
   uri: 'http://localhost:4000',
   headers: {
-    authorization: window.__APP_INITIAL_STATE__.user.id,
+    Authorization: `${window.__APP_INITIAL_STATE__}`,
   }, 
 });
-
-cache.writeData({ data: { student: window.__APP_INITIAL_STATE__.user }});
 
 render(
   <ApolloProvider client={client}>

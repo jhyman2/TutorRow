@@ -37,6 +37,14 @@ class GraphQL {
           } catch (e) {
             log.debug(`Error resolving universities`, e);
           }
+        },
+        user: async (obj, args, context) => {
+          try {
+            const results = await client.query(`SELECT * FROM users WHERE id=$1`, [context.user.id]);
+            return results.rows[0];
+          } catch (e) {
+            log.debug(`Error resolving user`, e);
+          }
         }
       },
       Course: {
@@ -76,7 +84,7 @@ class GraphQL {
         },
       },
       Student: {
-        courses: async (student) => {
+        coursesStudenting: async (student) => {
           try {
             const results = await client.query(
               `
@@ -84,7 +92,25 @@ class GraphQL {
                   FROM course_instances
                   JOIN courses
                     ON course_instances.course_id=courses.id
-                  WHERE student_id=$1
+                  WHERE student_id=$1 AND role='student'
+              `,
+              [student.id],
+            );
+            return results.rows;
+          }
+          catch (e) {
+            log.debug('Error resolving courses', e);
+          }
+        },
+        coursesTutoring: async (student) => {
+          try {
+            const results = await client.query(
+              `
+                SELECT *
+                  FROM course_instances
+                  JOIN courses
+                    ON course_instances.course_id=courses.id
+                  WHERE student_id=$1 AND role='tutor'
               `,
               [student.id],
             );
