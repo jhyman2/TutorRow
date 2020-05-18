@@ -157,6 +157,40 @@ class GraphQL {
             log.debug('Error enrolling in university', e);
           }
         },
+        unenrollStudentFromUniversity: async (obj, args, context) => {
+          try {
+            const result = await client.query(`
+              UPDATE
+                users
+                SET university_id='null'
+                  WHERE id=$1
+              `,
+              [context.user.id]
+            );
+            if (!result.rowCount) {
+              throw new UserInputError('Unenrolling unsuccessful');
+            }
+
+            const users = await client.query(`
+              SELECT a.id, a.university_id, a.full_name, b.name as university_name, b.id as university_id
+                FROM users a
+                  INNER JOIN universities b on a.university_id = b.id
+                  WHERE a.id=$1;
+              `,
+              [context.user.id],
+            );
+            const [user] = users.rows;
+            return {
+              ...user,
+              university: {
+                id: user.university_id,
+                name: user.university_name,
+              },
+            };
+          } catch (e) {
+            log.debug('Error unenrolling from university', e);
+          }
+        },
         dropCourse: async (obj, args, context) => {
           try {
             const result = await client.query(`

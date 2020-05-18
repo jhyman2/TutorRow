@@ -36,6 +36,7 @@ import GraphQL from './graphql/';
 process.env.PGDATABASE = 'tutorrow';
 process.env.PGHOST     = 'localhost';
 process.env.PGUSER     = 'postgres';
+process.env.PGPASSWORD = 'folks';
 
 log.setLevel('debug', true);
 
