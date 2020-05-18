@@ -1,10 +1,14 @@
 import gql from 'graphql-tag';
 
-const GET_UNIVERSITY_COURSES = gql`
-  query getUniversityCourses {
+const GET_USER_UNIVERSITY = gql`
+  query getUserUniversity {
     user {
       id
       full_name
+      university {
+        id
+        name
+      }
       coursesStudenting {
         id
         course_num
@@ -23,22 +27,8 @@ const GET_UNIVERSITY_COURSES = gql`
         num_credits
         professor
       }
-      university {
-        id
-        name
-        courses {
-          id
-          course_num
-          department
-          description
-          name
-          num_credits
-          professor
-          university_id
-        }
-      }
     }
   }
 `;
 
-export default GET_UNIVERSITY_COURSES;
+export default GET_USER_UNIVERSITY;

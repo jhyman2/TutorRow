@@ -11,7 +11,8 @@ const typeDefs =  gql`
     id: Int
     university: University
     full_name: String
-    courses: [Course]
+    coursesStudenting: [Course]!
+    coursesTutoring: [Course]!
   }
 
   type Course {
@@ -33,12 +34,13 @@ const typeDefs =  gql`
     signupForCourse(id: Int, role: String): Course
     dropCourse(id: Int): Course
   }
-
+  
   type Query {
     course(id: Int): Course
     student(id: Int): Student
     universities: [University]
     university(id: Int): University
+    user: Student
   }
 `;
 
