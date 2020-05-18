@@ -188,7 +188,7 @@ class GraphQL {
             const result = await client.query(`
               UPDATE
                 users
-                SET university_id='null'
+                SET university_id=null
                   WHERE id=$1
               `,
               [context.user.id]
@@ -198,21 +198,14 @@ class GraphQL {
             }
 
             const users = await client.query(`
-              SELECT a.id, a.university_id, a.full_name, b.name as university_name, b.id as university_id
-                FROM users a
-                  INNER JOIN universities b on a.university_id = b.id
-                  WHERE a.id=$1;
+              SELECT *
+                FROM users
+                  WHERE id=$1;
               `,
               [context.user.id],
             );
             const [user] = users.rows;
-            return {
-              ...user,
-              university: {
-                id: user.university_id,
-                name: user.university_name,
-              },
-            };
+            return user;
           } catch (e) {
             log.debug('Error unenrolling from university', e);
           }
