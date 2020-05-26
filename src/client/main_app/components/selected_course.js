@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import Course_Card from './course_card';
+import TRButton from '../../controls/TRButton.tsx';
 
 import SIGNUP_FOR_COURSE from '../graphql/mutations/signupForCourse.ts';
 import DROP_COURSE from '../graphql/mutations/dropCourse.ts';
@@ -41,12 +42,12 @@ const Selected_Course = ({ user }) => {
 
   return (
     <>
-      <button
-        className="mt-8 ml-8 bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow my-1"
-        onClick={() => dispatch({ type: 'SELECTED_COURSE_RESET'})}
+      <TRButton
+        className="mt-8 ml-8 my-1"
+        onClick={() => dispatch({ type: 'SELECTED_COURSE_RESET' })}
       >
         Return to dashboard
-      </button>
+      </TRButton>
       <div className="mx-auto flex-col container justify-center h-screen flex items-center p-5">
         <Course_Card
           allowStudentRemoveSignup={studentIsTakingClass}

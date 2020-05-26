@@ -1,11 +1,11 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 // @ts-ignore
-import GET_USER_UNIVERSITY from './graphql/queries/getUserUniversity.ts';
+import GET_USER_UNIVERSITY from 'graphql/queries/getUserUniversity.ts';
 
-import SelectUni from './components/selectUni';
-import Dashboard from './components/dashboard';
-import Loading from './components/loading';
+import SelectUni from 'components/selectUni';
+import Dashboard from 'components/dashboard';
+import Loading from 'components/loading';
 
 const Main_App = () => {
   const { loading, error, data } = useQuery(GET_USER_UNIVERSITY);

@@ -3,6 +3,7 @@ import { useMutation, useQuery } from '@apollo/react-hooks';
 import GET_UNIVERSITIES from '../graphql/queries/getUniversities.ts';
 import ENROLL_STUDENT_IN_UNIVERSITY from '../graphql/mutations/enrollStudentInUniversity.ts';
 import Loading from '../components/loading';
+import TRButton from '../../controls/TRButton.tsx';
 
 const SelectUni = ({ user }) => {
   const selectRef = useRef(null);
@@ -30,15 +31,15 @@ const SelectUni = ({ user }) => {
               </option>
             ))}
           </select>
-          <button
-            className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow ml-auto my-1"
+          <TRButton
+            className="ml-auto my-1"
             onClick={() => {
               const university_id = selectRef.current[selectRef.current.selectedIndex].value;
               enrollStudentInUniversity({ variables: { id: parseInt(university_id) }});
             }}
           >
             Go!
-          </button>
+          </TRButton>
         </div>
       </div>
     </div>

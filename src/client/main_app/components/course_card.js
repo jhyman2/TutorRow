@@ -1,6 +1,7 @@
 import React from 'react';
 import studentImg from '../../zondicons/user.svg';
 import tutorImg from '../../zondicons/badge.svg';
+import TRButton from '../../controls/TRButton.tsx';
 
 function Course_Card ({
   allowStudentSignup = false,
@@ -58,13 +59,10 @@ function Course_Card ({
           <img className="h-4 w-4" src={tutorImg} />
           <Tutors />
           {(allowTutorSignup || allowTutorRemoveSignup) && (
-            <button
-              className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow ml-auto"
-              onClick={onTutorAction}
-            >
+            <TRButton className="ml-auto" onClick={onTutorAction}>
               {allowTutorSignup && 'Sign up to tutor!'}
               {allowTutorRemoveSignup && 'I dont want to tutor'}
-            </button>
+            </TRButton>
           )}
         </div>
       )}
@@ -73,13 +71,10 @@ function Course_Card ({
           <img className="h-4 w-4" src={studentImg} />
           <Students />
           {(allowStudentSignup || allowStudentRemoveSignup) && (
-            <button
-              className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow ml-auto"
-              onClick={onStudentAction}
-            >
+            <TRButton className="ml-auto" onClick={onStudentAction}>
               {allowStudentSignup && 'Tutor me!'}
               {allowStudentRemoveSignup && 'I dont need tutoring'}
-            </button>
+            </TRButton>
           )}
         </div>
       )}

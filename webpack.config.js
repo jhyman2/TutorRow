@@ -3,6 +3,12 @@ module.exports = {
     bundle: './src/server/views/components/login/browser.js',
     main: ['babel-polyfill', './src/client/main_app/browser.js']
   },
+  resolve: {
+    modules: [
+      './src/client',
+      './node_modules',
+    ],
+  },
   module: {
     rules: [
       {
