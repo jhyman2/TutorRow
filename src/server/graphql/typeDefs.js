@@ -30,6 +30,7 @@ const typeDefs =  gql`
 
   type Mutation {
     enrollStudentInUniversity(id: Int): Student
+    unenrollStudentFromUniversity: Student
     signupForCourse(id: Int, role: String): Course
     dropCourse(id: Int): Course
   }
