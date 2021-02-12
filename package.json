@@ -37,6 +37,7 @@
     "body-parser": "^1.15.2",
     "classnames": "^2.2.6",
     "cookie-parser": "^1.4.3",
+    "dotenv": "^8.2.0",
     "ejs": "^2.5.5",
     "express": "^4.14.0",
     "express-session": "^1.15.0",
