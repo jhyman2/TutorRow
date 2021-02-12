@@ -94,9 +94,9 @@ pool.connect((err, client, done) => {
         return done(null, result.rows[0].facebook_id);
       } else {
         // if user not in database, create record
-        const query = 'INSERT INTO users (facebook_id, full_name) VALUES ($1, $2);';
+        const query = 'INSERT INTO users (facebook_id, full_name, email) VALUES ($1, $2, $3);';
 
-        client.query(query, [profile._json.id, profile._json.name], (err, result) => {
+        client.query(query, [profile._json.id, profile._json.name, profile._json.email], (err, result) => {
           return done(null, profile.id);
         });
       }

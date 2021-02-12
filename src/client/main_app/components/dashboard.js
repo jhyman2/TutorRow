@@ -50,7 +50,10 @@ export default function DashboardComponent() {
           ))}
         </div>
         <div>
-          <TRButton onClick={unenroll}>{`Withdraw from ${data.user.university.name}`}</TRButton>
+          <div className="flex flex-col">
+            <TRButton onClick={() => window.location = "/"}>Logout</TRButton>
+            <TRButton onClick={unenroll}>{`Withdraw from ${data.user.university.name}`}</TRButton>
+          </div>
           <p className="py-2">My courses that I am enrolled in:</p>
           <div className="pt-8">
             <p>Courses I am Tutoring</p>
