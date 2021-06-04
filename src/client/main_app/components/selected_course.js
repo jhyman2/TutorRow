@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { useQuery, useMutation } from '@apollo/react-hooks';
-import Course_Card from './course_card';
+import Course_Card from './course_card.tsx';
 import TRButton from '../../controls/TRButton.tsx';
 
 import SIGNUP_FOR_COURSE from '../graphql/mutations/signupForCourse.ts';

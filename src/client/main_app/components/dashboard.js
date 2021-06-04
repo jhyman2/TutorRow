@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 
 import Loading         from './loading';
-import Course_Card     from './course_card';
+import Course_Card     from './course_card.tsx';
 import Selected_Course from './selected_course';
 
 import TRButton from '../../controls/TRButton.tsx';

@@ -1,6 +1,9 @@
 import React from 'react';
+// @ts-ignore
 import studentImg from '../../zondicons/user.svg';
+// @ts-ignore
 import tutorImg from '../../zondicons/badge.svg';
+// @ts-ignore
 import TRButton from '../../controls/TRButton.tsx';
 
 function Course_Card ({
@@ -40,7 +43,7 @@ function Course_Card ({
         {tutor.full_name}
       </p>
     ));
-  }
+  };
 
   return (
     <div className="max-w-sm rounded overflow-hidden shadow-lg" onClick={() => select(course.id)}>
