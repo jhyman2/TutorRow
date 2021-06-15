@@ -26,9 +26,9 @@ function Login() {
               'hover:bg-blue',
               'mt-4 lg:mt-0',
             )}
-            href="/auth/facebook"
+            href="/auth/google"
           >
-            Facebook
+            Google
           </a>
         </div>
       </div>
