@@ -42,8 +42,7 @@ log.setLevel('debug', true);
 // db, app, and server listening setup
 const app              = express();
 const server           = http.Server(app);
-const FacebookStrategy = require('passport-facebook').Strategy;
-const GoogleStrategy   = require('passport-google-oauth2').Strategy;
+const GoogleStrategy   = require('passport-google-oauth20').Strategy;
 const auth             = require('./auth.js');
 const pool             = new Pool();
 
@@ -81,39 +80,15 @@ pool.connect((err, client, done) => {
   // send the mongo client to the GraphQL server
   const graphQLServer = new GraphQL(client);
 
-  passport.use(new FacebookStrategy({
-    // pull in our app id and secret from our auth.js file
-    clientID        : auth.facebookAuth.clientID,
-    clientSecret    : auth.facebookAuth.clientSecret,
-    callbackURL     : auth.facebookAuth.callbackURL,
-    profileFields   : ['id', 'displayName', ,'first_name', 'last_name', 'photos', 'email', 'age_range']
-  }, (token, refreshToken, profile, done) => {
-    // save user to DB
-    client.query('SELECT * FROM users WHERE facebook_id=$1;', [profile.id], (err, result) => {
-      if (result && result.rows.length) {
-        // if user already in database, find their record
-        return done(null, result.rows[0].facebook_id);
-      } else {
-        // if user not in database, create record
-        const query = 'INSERT INTO users (facebook_id, full_name, email) VALUES ($1, $2, $3);';
-
-        client.query(query, [profile._json.id, profile._json.name, profile._json.email], (err, result) => {
-          return done(null, profile.id);
-        });
-      }
-    });
-  }));
-
   passport.use(new GoogleStrategy({
     clientID:     auth.googleAuth.clientID,
     clientSecret: auth.googleAuth.clientSecret,
     callbackURL:  auth.googleAuth.callbackURL,
     passReqToCallback: true,
-    scope:  ['profile', 'email', 'name']
+    scope:  ['profile', 'email', 'name', 'displayName']
   },
   function(request, accessToken, refreshToken, profile, done) {
     // save user to DB
-    console.log("profile: ", profile);
     client.query('SELECT * FROM users WHERE google_id=$1;', [profile.id], (err, result) => {
       if (result && result.rows.length) {
         // if user already in database, find their record
@@ -122,7 +97,7 @@ pool.connect((err, client, done) => {
         // if user not in database, create record
         const query = 'INSERT INTO users (google_id, full_name, email) VALUES ($1, $2, $3);';
 
-        client.query(query, [profile.id, profile.name, profile.email], (err, result) => {
+        client.query(query, [profile.id, profile.displayName, profile._json.email], (err, result) => {
           return done(null, profile.id);
         });
       }
@@ -191,7 +166,7 @@ pool.connect((err, client, done) => {
    */
 
   // GET Google authentication
-  app.get('/auth/google', passport.authenticate('google', { scope: ['email'] }));
+  app.get('/auth/google', passport.authenticate('google', { scope: ['email', 'profile'] }));
 
   // Callback after authenticating with Google
   app.get('/auth/google/callback', passport.authenticate('google', {
