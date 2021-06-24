@@ -9,4 +9,5 @@ test('loads and displays login page', async () => {
   await waitFor(() => screen.getByRole('heading'))
 
   expect(screen.getByRole('heading')).toHaveTextContent('Welcome to TutorRow')
+  expect(screen.getByText('Google')).toHaveAttribute('href', '/auth/google')
 })
